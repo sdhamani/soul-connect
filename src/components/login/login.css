@@ -1,0 +1,75 @@
+:root {
+  --primary-color: #2a2c2e;
+  --secondary-color: #00cacd;
+  --button-text-color: white;
+}
+
+.login-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+.login-center-div {
+  width: 30%;
+  height: 45%;
+}
+
+.login-card {
+  box-shadow: 0 3px 8px rgb(0 0 0 / 24%);
+  border-radius: 1rem;
+  color: var(--button-text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: var(--primary-color);
+}
+.login-card-heading {
+  width: 100%;
+  text-align: center;
+}
+
+.login-account {
+  margin: 1rem;
+  display: inline;
+}
+
+.login-input-div {
+  margin: 0.2rem 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.error-message-div {
+  text-align: center;
+}
+
+.login-input {
+  width: 80%;
+  padding: 0.5rem 0.5rem;
+  margin: 0.3rem;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+}
+
+.login-actions {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--button-text-color);
+  margin: 0.8rem 0.2rem;
+}
+.login-actions-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* login-mobile-styling */
+@media screen and (max-width: 767px) {
+  .login-center-div {
+    width: 80%;
+  }
+}
