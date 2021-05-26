@@ -1,9 +1,14 @@
 import React from "react";
 import { useState } from "react";
+import "./login.css";
 function Login() {
   const [employeeId, setEmployeeId] = useState("");
   const [password, setPassword] = useState("");
   const [credentialsError, setCredentialsError] = useState("");
+  const [employeeIdError, setemployeeIdError] = useState("");
+
+  const [passwordError, setPasswordError] = useState("");
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
   const checkCredentails = (employeeId, password) => {};
 
@@ -24,15 +29,14 @@ function Login() {
 
           <div className="login-input-div">
             <input
-              placeholder="Enter an email Id"
+              placeholder="Enter an employee Id"
               className="login-input"
               onChange={(e) => setEmployeeId(e.target.value)}
-              type="email"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              type="inputW"
             ></input>
           </div>
-          {emailError !== "" ? (
-            <p className="input-check">*{emailError}</p>
+          {employeeIdError !== "" ? (
+            <p className="input-check">*{employeeIdError}</p>
           ) : null}
           <div className="login-input-div">
             <input
@@ -55,7 +59,8 @@ function Login() {
 
           <input
             type="submit"
-            value={showLoading ? "SIGNING IN" : "SIGN IN"}
+            // value={showLoading ? "SIGNING IN" : "SIGN IN"}
+            value={"SIGN IN"}
             className={
               isSubmitDisabled
                 ? "disabled-btn signin"
@@ -64,12 +69,6 @@ function Login() {
             onClick={(e) => signInUser()}
             disabled={isSubmitDisabled}
           ></input>
-
-          <button className="login-actions">
-            <Link className="login-actions-link" to="/signup">
-              Don't have an account? Create an account
-            </Link>
-          </button>
         </div>
       </div>
     </div>
