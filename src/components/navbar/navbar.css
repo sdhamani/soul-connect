@@ -1,0 +1,53 @@
+:root {
+  --primary-color: #2a2c2e;
+  --secondary-color: white;
+}
+
+.navigation {
+  width: 100%;
+  border-bottom-right-radius: 1rem;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-heading {
+  font-size: 1.4rem;
+  margin: 0.8rem;
+  padding: 0rem 1rem;
+  color: var(--secondary-color);
+  font-style: italic;
+}
+
+.nav-header-link {
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+
+.logout-div {
+  width: 86%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-userName {
+  font-size: 1rem;
+  margin: 0.8rem;
+  padding: 0rem 0rem;
+  color: var(--secondary-color);
+  color: var(--secondary-color);
+}
+
+.logout-btn {
+  background-color: var(--primary-color);
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  margin: 0.8rem;
+  padding: 0rem 0rem;
+  color: var(--secondary-color);
+}
