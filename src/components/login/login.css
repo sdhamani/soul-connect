@@ -11,9 +11,10 @@
   width: 100%;
   height: 100vh;
 }
+
 .login-center-div {
-  width: 30%;
-  height: 45%;
+  width: 20%;
+  height: 50%;
 }
 
 .login-card {
@@ -54,6 +55,29 @@
   border: none;
   outline: none;
   border-radius: 0.5rem;
+}
+
+.input-check {
+  width: 80%;
+  display: block;
+  text-align: left;
+  font-size: small;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: gray;
+}
+
+.disabled-btn {
+  width: 80%;
+  background-color: var(--primary-color);
+  padding: 0.3rem 0.3rem;
+  margin: 0.2rem 0.2rem;
+}
+
+.signin {
+  border: 1px solid var(--button-text-color);
+  width: 80%;
+  margin: 0.5rem;
 }
 
 .login-actions {
