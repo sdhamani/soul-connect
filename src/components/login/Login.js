@@ -1,6 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import users from "../../data/users";
+import { useState, useEffect } from "react";
 import "./login.css";
+
 function Login() {
   const [employeeId, setEmployeeId] = useState("");
   const [password, setPassword] = useState("");
@@ -10,14 +12,54 @@ function Login() {
   const [passwordError, setPasswordError] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  const checkCredentails = (employeeId, password) => {};
-
-  const signInUser = () => {
-    const response = checkCredentails(employeeId, password);
-    if (response.success === true) {
-      localStorage?.setItem("login", JSON.stringify({ isUserLoggedIn: true }));
+  const checkCredentails = (employeeId, password) => {
+    let user = users.find((user) => user.employeeId === employeeId);
+    if (!user) {
+      setCredentialsError("Invalid User");
+      return false;
+    } else if (user.password === password) {
+      setCredentialsError("Logg");
+      return true;
     } else {
-      setCredentialsError(response);
+      setPasswordError("Incorrect Password");
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    setCredentialsError("");
+    if (employeeId.length === 0) {
+      setemployeeIdError("This field is required");
+    } else if (!employeeId.startsWith("SB")) {
+      setemployeeIdError("Not a valid employeeId");
+    } else {
+      setemployeeIdError("");
+    }
+  }, [employeeId]);
+
+  useEffect(() => {
+    setCredentialsError("");
+    setPasswordError("");
+    if (password.length === 0) {
+      setPasswordError("This field is required");
+    }
+    if (employeeIdError === "" && passwordError === "") {
+      setIsSubmitDisabled(false);
+    } else {
+      setIsSubmitDisabled(true);
+    }
+  }, [password, employeeIdError, passwordError]);
+
+  const signInUser = async () => {
+    const response = await checkCredentails(employeeId, password);
+
+    if (response) {
+      localStorage?.setItem("login", JSON.stringify({ isUserLoggedIn: true }));
+    }
+    if (employeeIdError === "" && passwordError === "") {
+      setIsSubmitDisabled(false);
+    } else {
+      setIsSubmitDisabled(true);
     }
   };
 
@@ -32,7 +74,7 @@ function Login() {
               placeholder="Enter an employee Id"
               className="login-input"
               onChange={(e) => setEmployeeId(e.target.value)}
-              type="inputW"
+              type="input"
             ></input>
           </div>
           {employeeIdError !== "" ? (
