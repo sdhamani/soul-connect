@@ -1,10 +1,14 @@
 import Login from "./components/login/Login";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import PrivateRoute from "./routes/PrivateRoute";
+import HomePage from "./components/homepage/HomePage";
+
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <PrivateRoute path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
