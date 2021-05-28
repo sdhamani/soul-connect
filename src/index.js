@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { LoginProvider } from "./context/login-context";
+import { IdeasProvider } from "./context/ideas-context";
 
 ReactDOM.render(
   <React.StrictMode>
     <LoginProvider>
-      <Router>
-        <App />
-      </Router>
+      <IdeasProvider>
+        <Router>
+          <App />
+        </Router>
+      </IdeasProvider>
     </LoginProvider>
   </React.StrictMode>,
   document.getElementById("root")
