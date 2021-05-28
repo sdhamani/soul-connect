@@ -1,6 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./navbar.css";
-import { useState } from "react";
 
 import { Link } from "react-router-dom";
 import useLogin from "../../context/login-context";
