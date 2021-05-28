@@ -1,0 +1,48 @@
+:root {
+  --primary-color: white;
+  --secondary-color: #2a2c2e;
+}
+
+.sidebar {
+  background-color: white;
+  color: var(--secondary-color);
+  width: 13%;
+  height: 85vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  border: 1px solid grey;
+  border-radius: 1rem;
+}
+
+.sidebar-heading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0.2rem 0.2rem;
+  padding-top: 1rem;
+}
+
+.sidebar-userName {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.sidebar-userImage {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.sidebade-myposts {
+  margin: 1rem 0.3rem;
+  text-align: center;
+  align-items: center;
+  padding: 0.3rem;
+  border-radius: 0.8rem;
+  border: 0.5px solid grey;
+}
