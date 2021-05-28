@@ -11,6 +11,7 @@ export function LoginProvider({ children }) {
   const [loggedIn, setloggedIn] = useState(false);
 
   const [userName, setuserName] = useState("");
+  const [employeeId, setemployeeId] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("login")) {
@@ -21,7 +22,9 @@ export function LoginProvider({ children }) {
       const { localUserName } = JSON.parse(
         localStorage?.getItem("localUserName")
       );
+      const { employeeId } = JSON.parse(localStorage?.getItem("employeeId"));
       setuserName(localUserName);
+      setemployeeId(employeeId);
     }
   }, []);
 
@@ -32,6 +35,8 @@ export function LoginProvider({ children }) {
         setloggedIn: setloggedIn,
         userName: userName,
         setuserName: setuserName,
+        employeeId: employeeId,
+        setemployeeId: setemployeeId,
       }}
     >
       {children}
