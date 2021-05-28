@@ -15,7 +15,7 @@ function Login() {
   const [passwordError, setPasswordError] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  const { setloggedIn, setuserName } = useLogin();
+  const { setloggedIn, setuserName, setemployeeId } = useLogin();
 
   const navigate = useNavigate();
 
@@ -27,6 +27,8 @@ function Login() {
     } else if (user.password === password) {
       setloggedIn(true);
       setuserName(user.name);
+
+      setemployeeId(user.employeeId);
       return { success: true, user: user };
     } else {
       setPasswordError("Incorrect Password");
@@ -66,6 +68,10 @@ function Login() {
       localStorage?.setItem(
         "localUserName",
         JSON.stringify({ localUserName: response.user.name })
+      );
+      localStorage?.setItem(
+        "employeeId",
+        JSON.stringify({ employeeId: response.user.employeeId })
       );
       navigate("/");
     }
