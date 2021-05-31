@@ -1,19 +1,21 @@
 :root {
-  --primary-color: white;
-  --secondary-color: #2a2c2e;
+  --side-bar-back: #2c3531;
+  --sidebar-text: #ffffff;
+  --border-color: #ffcb9a;
 }
 
 .sidebar {
-  background-color: white;
-  color: var(--secondary-color);
-  width: 13%;
+  background-color: var(--side-bar-back);
+  color: var(--sidebar-text);
+  width: 18%;
   height: 85vh;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  border: 1px solid grey;
+  border: 1px solid var(--border-color);
   border-radius: 1rem;
+  margin-top: 1rem;
 }
 
 .sidebar-heading {
@@ -27,8 +29,9 @@
 }
 
 .sidebar-userName {
-  color: var(--secondary-color);
-  font-weight: 600;
+  color: var(--sidebar-text);
+  font-weight: 800;
+  margin-top: 0.6rem;
 }
 
 .sidebar-userImage {
@@ -39,10 +42,16 @@
 }
 
 .sidebade-myposts {
-  margin: 1rem 0.3rem;
+  margin: 1rem 0.6rem;
   text-align: center;
   align-items: center;
   padding: 0.3rem;
   border-radius: 0.8rem;
-  border: 0.5px solid grey;
+  border: 0.5px solid var(--border-color);
+}
+
+@media screen and (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
 }

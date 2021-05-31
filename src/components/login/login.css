@@ -1,6 +1,7 @@
 :root {
-  --primary-color: white;
-  --secondary-color: #2a2c2e;
+  --login-background: #2c3531;
+  --detailing-color: #116466;
+  --text-color: #ffffff;
 }
 
 .login-div {
@@ -19,12 +20,12 @@
 .login-card {
   box-shadow: 0 3px 8px rgb(0 0 0 / 24%);
   border-radius: 1rem;
-  color: var(--secondary-color);
+  color: var(--detailing-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-color: var(--primary-color);
+  background-color: var(--login-background);
 }
 .login-card-heading {
   width: 100%;
@@ -35,6 +36,7 @@
   font-size: x-large;
   margin: 1rem;
   display: inline;
+  color: var(--text-color);
 }
 
 .login-input-div {
@@ -54,7 +56,10 @@
   margin: 0.3rem;
   border: none;
   outline: none;
+  font-weight: bold;
   border-radius: 0.5rem;
+  color: var(--text-color);
+  background-color: var(--detailing-color);
 }
 
 .input-check {
@@ -64,26 +69,27 @@
   font-size: small;
   margin-top: 0;
   margin-bottom: 0.5rem;
-  color: gray;
+  color: var(--text-color);
 }
 
 .disabled-btn {
   width: 80%;
-  background-color: var(--primary-color);
+  background-color: var(--login-background);
   padding: 0.3rem 0.3rem;
   margin: 0.2rem 0.2rem;
+  color: var(--text-color);
 }
 
 .signin {
-  border: 1px solid var(--secondary-color);
+  border: 1px solid var(--detailing-color);
   width: 80%;
   margin: 0.5rem;
 }
 
 .login-actions {
-  background-color: var(--primary-color);
+  background-color: var(--login-background);
   border: none;
-  color: var(--secondary-color);
+  color: var(--text-color);
   margin: 0.8rem 0.2rem;
 }
 .login-actions-link {
