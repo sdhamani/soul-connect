@@ -19,6 +19,7 @@ export default function Nav({ route, setRoute }) {
       "localUserName",
       JSON.stringify({ localUserName: "" })
     );
+    localStorage?.setItem("employeeId", JSON.stringify({ employeeId: "" }));
 
     navigate("/login");
   }

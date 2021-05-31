@@ -22,8 +22,13 @@ export function LoginProvider({ children }) {
       const { localUserName } = JSON.parse(
         localStorage?.getItem("localUserName")
       );
-      const { employeeId } = JSON.parse(localStorage?.getItem("employeeId"));
+
       setuserName(localUserName);
+    }
+
+    if (localStorage?.getItem("employeeId")) {
+      const { employeeId } = JSON.parse(localStorage?.getItem("employeeId"));
+
       setemployeeId(employeeId);
     }
   }, []);
