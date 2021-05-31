@@ -79,3 +79,7 @@
 .posts-sortby option {
   font-size: small;
 }
+
+.added-tags-posts {
+  margin: 0.8rem 0rem;
+}

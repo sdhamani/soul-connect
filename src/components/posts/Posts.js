@@ -47,6 +47,11 @@ function Posts() {
               </div>
               <div className="idea-heading-title">{idea.title}</div>
               <div className="idea-description">{idea.description}</div>
+              <div className="added-tags-posts">
+                {idea.tags.map((tag) => (
+                  <span className="idea-tag">{tag}</span>
+                ))}
+              </div>
               <hr></hr>
               <div>
                 <i
