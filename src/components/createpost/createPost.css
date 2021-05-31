@@ -134,6 +134,10 @@
   margin: 0.5rem;
 }
 
+.disabled {
+  color: grey;
+}
+
 @media screen and (max-width: 767px) {
   .create-post {
     position: fixed;

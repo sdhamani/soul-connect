@@ -9,7 +9,7 @@ function CreatePost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { employeeId } = useLogin();
-  let { ideas, setIdeas } = useIdeas();
+  const { ideas, ideasDispatch } = useIdeas();
   const [ShowCreateIdea, setShowCreateIdea] = useState(false);
   const [tags, setTags] = useState([]);
 
@@ -27,8 +27,15 @@ function CreatePost() {
 
   const createIdea = () => {
     let user = users.find((user) => (user.employeeId = employeeId));
-    console.log("t", title, "des", description);
-    let newDate = new Date();
+    let today = new Date();
+
+    let date =
+      today.getDate() +
+      "-" +
+      parseInt(today.getMonth() + 1) +
+      "-" +
+      today.getFullYear();
+
     let newIdea = {
       id: uuidv4(),
       hackathon: "May21",
@@ -36,12 +43,11 @@ function CreatePost() {
       title: title,
       description: description,
       tags: tags,
-      creationDate: newDate,
+      creationDate: date,
       votes: [],
     };
-    console.log("newobj", newIdea);
-    let newArray = [...ideas, newIdea];
-    setIdeas(newArray);
+    ideasDispatch({ TYPE: "ADDIDEA", PAYLOAD: newIdea });
+    setShowCreateIdea(false);
   };
 
   return (
@@ -54,7 +60,7 @@ function CreatePost() {
       <input
         onClick={(e) => setShowCreateIdea(true)}
         className="createPost-input"
-        placeholder="Start a Post"
+        placeholder="Create an Idea"
         type="text"
       ></input>
       {ShowCreateIdea && (
@@ -115,7 +121,15 @@ function CreatePost() {
               </li>
             </ul>
           </div>
-          <button className="create-idea-btn" onClick={(e) => createIdea()}>
+          <button
+            disabled={title === "" || description === ""}
+            className={
+              title === "" || description === ""
+                ? "create-idea-btn disabled"
+                : "create-idea-btn"
+            }
+            onClick={(e) => createIdea()}
+          >
             Create
           </button>
         </div>
