@@ -6,7 +6,7 @@ import users from "../../data/users";
 
 function SideBar() {
   const { userName, employeeId } = useLogin();
-  console.log(userName, employeeId);
+
   const user = users.find((user) => user.employeeId === employeeId);
   return (
     <div className="sidebar">
