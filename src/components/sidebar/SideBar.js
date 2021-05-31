@@ -3,6 +3,7 @@ import React from "react";
 import "./sidebar.css";
 import useLogin from "../../context/login-context";
 import users from "../../data/users";
+import { Link } from "react-router-dom";
 
 function SideBar() {
   const { userName, employeeId } = useLogin();
@@ -20,7 +21,11 @@ function SideBar() {
           <span className="sidebar-userName">{userName}</span>
         </div>
 
-        <div className="sidebade-myposts">My Posts</div>
+        <div className="sidebar-myposts">
+          <Link className="sidebar-my-posts-link" to="/usersposts">
+            My Posts
+          </Link>
+        </div>
       </div>
     </div>
   );
