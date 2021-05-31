@@ -19,6 +19,7 @@ export function IdeasProvider({ children }) {
   function dispatchfun(state, value) {
     console.log({ state }, { value });
     const ideaId = value.PAYLOAD;
+
     switch (value.TYPE) {
       case "VOTES":
         return state.slice().sort(function (a, b) {
@@ -54,7 +55,24 @@ export function IdeasProvider({ children }) {
           }
           return idea;
         });
+      case "EDITIDEA":
+        const editedArray = state.map((idea) => {
+          if (idea.id === value.PAYLOAD.id) {
+            return {
+              ...idea,
+              title: value.PAYLOAD.title,
+              description: value.PAYLOAD.description,
+              tags: value.PAYLOAD.tags,
+              creationDate: value.PAYLOAD.editedDate,
+            };
+          }
+          return idea;
+        });
+        console.log({ editedArray });
 
+        return editedArray;
+      case "DELETEIDEA":
+        return state.filter((idea) => idea.id !== value.PAYLOAD);
       default:
         return state;
     }
