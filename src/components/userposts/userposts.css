@@ -1,0 +1,71 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --text-color: #ffffff;
+}
+
+.userposts-div {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+}
+
+.userposts-content {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.userposts-posts {
+  width: 45%;
+  margin: 0.8rem 0.5rem;
+}
+
+.idea-manage-btn {
+  padding: 0.1rem 0.2rem;
+  margin: 0.2rem 0.2rem;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+}
+
+.delete-idea-popup {
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  position: fixed;
+  top: 40%;
+  left: 38%;
+  width: 28%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--border-color);
+}
+
+.delete-idea-button {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  padding: 0.4rem 0.5rem;
+  margin: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.8rem;
+  color: var(--border-color);
+}
+
+.no-posts-text {
+  color: var(--text-color);
+  text-align: flex-start;
+  margin: 0.2rem;
+}
