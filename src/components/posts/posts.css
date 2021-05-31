@@ -31,6 +31,10 @@
   color: grey;
 }
 
+.idea-heading-title {
+  margin: 0.2rem 0.2rem;
+}
+
 .idea-description {
   margin: 0.2rem 0.2rem;
 }
@@ -42,10 +46,36 @@
   text-shadow: 0 0 1px var(--post-text-color);
 }
 
+.liked {
+  color: var(--post-like-color) !important;
+}
+
+.disliked {
+  color: var(--post-dislike-color) !important;
+}
+
 .idea .fa-arrow-up:hover {
   color: var(--post-like-color);
 }
 
 .idea .fa-arrow-down:hover {
   color: var(--post-dislike-color);
+}
+
+.posts-sortby {
+  text-align: right;
+  margin: 0.5rem 0.5rem;
+}
+
+.posts-sortby label {
+  margin: 0rem 0.4rem;
+}
+
+.posts-sortby select {
+  background-color: var(--post-back);
+  color: var(--post-text-color);
+}
+
+.posts-sortby option {
+  font-size: small;
 }
