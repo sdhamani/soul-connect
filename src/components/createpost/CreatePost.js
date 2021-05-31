@@ -31,9 +31,9 @@ function CreatePost() {
 
     let date =
       today.getDate() +
-      "-" +
+      "/" +
       parseInt(today.getMonth() + 1) +
-      "-" +
+      "/" +
       today.getFullYear();
 
     let newIdea = {
