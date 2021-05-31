@@ -1,0 +1,51 @@
+:root {
+  --post-back: #2c3531;
+  --post-text-color: white;
+  --border-color: #ffcb9a;
+  --post-like-color: #116466;
+  --post-dislike-color: #960317;
+}
+
+.idea {
+  background-color: var(--post-back);
+  padding: 0.5rem 0.5rem;
+  margin: 0.3rem 0.3rem;
+  color: var(--post-text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.4rem;
+}
+
+.idea-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.idea-heading-title {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.idea-date {
+  font-size: small;
+  color: grey;
+}
+
+.idea-description {
+  margin: 0.2rem 0.2rem;
+}
+
+.idea .fa {
+  margin: 0.3rem 0.3rem;
+  color: var(--post-back);
+
+  text-shadow: 0 0 1px var(--post-text-color);
+}
+
+.idea .fa-arrow-up:hover {
+  color: var(--post-like-color);
+}
+
+.idea .fa-arrow-down:hover {
+  color: var(--post-dislike-color);
+}
