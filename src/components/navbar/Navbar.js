@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./navbar.css";
-
 import { Link } from "react-router-dom";
 import useLogin from "../../context/login-context";
+
+import SideBar from "../sidebar/SideBar";
 
 export default function Nav({ route, setRoute }) {
   const navigate = useNavigate();
   const { loggedIn, setloggedIn, userName } = useLogin();
+  const [showSide, setshowSide] = useState(false);
 
   function logoutFun() {
     setloggedIn(false);
@@ -21,8 +24,18 @@ export default function Nav({ route, setRoute }) {
   }
 
   return (
-    <div>
+    <div className="navbar">
+      {showSide && <SideBar />}
       <nav className="navigation">
+        <div
+          onClick={(e) => setshowSide(!showSide)}
+          className="hamburger"
+          id="hamburger"
+        >
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
+        </div>
         <h1 className="nav-heading">
           <Link className="nav-header-link" to="/">
             Hack Ideas
