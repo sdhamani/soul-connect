@@ -69,3 +69,14 @@
   text-align: flex-start;
   margin: 0.2rem;
 }
+
+@media screen and (max-width: 767px) {
+  .userposts-posts {
+    width: 75%;
+  }
+  .delete-idea-popup {
+    width: 45%;
+    top: 30%;
+    left: 25%;
+  }
+}

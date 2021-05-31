@@ -12,7 +12,7 @@ function Posts() {
   const loggedInUser = users.find((user) => user.employeeId === employeeId);
 
   return (
-    <div>
+    <div className="all-posts">
       <div className="posts-sortby">
         <label for="posts">SortBy:</label>
 

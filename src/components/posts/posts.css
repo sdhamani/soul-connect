@@ -83,3 +83,19 @@
 .added-tags-posts {
   margin: 0.8rem 0rem;
 }
+
+@media screen and (max-width: 767px) {
+  .idea {
+    width: 100%;
+  }
+  .posts-sortby option {
+    font-size: smaller;
+  }
+
+  .posts-sortby select {
+    font-size: smaller;
+    width: 68%;
+    margin: 0.2rem 0.1rem;
+    margin-top: 1rem;
+  }
+}

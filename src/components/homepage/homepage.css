@@ -32,3 +32,18 @@
   padding: 0.2rem 1.2rem;
   font-weight: 600;
 }
+
+@media screen and (max-width: 767px) {
+  .homepage-posts {
+    margin-top: 15rem;
+    width: 60%;
+    margin: 1rem 1rem;
+  }
+  .homepage-content {
+    justify-content: flex-start;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
