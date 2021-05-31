@@ -10,7 +10,7 @@ function CreatePost() {
   const [description, setDescription] = useState("");
   const { employeeId } = useLogin();
   const { ideas, ideasDispatch } = useIdeas();
-  const [ShowCreateIdea, setShowCreateIdea] = useState(false);
+  const [showCreateIdea, setShowCreateIdea] = useState(false);
   const [tags, setTags] = useState([]);
 
   const user = users.find((user) => user.employeeId === employeeId);
@@ -63,7 +63,7 @@ function CreatePost() {
         placeholder="Create an Idea"
         type="text"
       ></input>
-      {ShowCreateIdea && (
+      {showCreateIdea && (
         <div className="create-idea-popup">
           <div className="create-idea-heading">
             Create an Idea
