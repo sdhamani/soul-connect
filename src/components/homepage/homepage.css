@@ -32,36 +32,3 @@
   padding: 0.2rem 1.2rem;
   font-weight: 600;
 }
-
-.homepage-news {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-wrap: break-word;
-  width: 25%;
-  border: 1px solid #ffcb9a;
-  height: auto;
-  margin-top: 1rem;
-  border-radius: 1rem;
-  padding: 0.5rem 0rem;
-  background-color: var(--news-background);
-  color: var(--text-color);
-  font-size: 85%;
-}
-
-.homepage-news-list {
-  width: 80%;
-  margin: 0.3rem;
-  padding-left: 0.5rem;
-}
-@media screen and (max-width: 767px) {
-  html {
-    background-color: var(--background-color);
-  }
-  .homepage-news {
-    font-size: 55%;
-    position: fixed;
-    left: 75%;
-    width: 25%;
-  }
-}
