@@ -75,7 +75,6 @@ function CreatePost() {
               className="idea-title"
               type="text"
               onChange={(e) => {
-                console.log("E", e);
                 setTitle(e.target.value);
               }}
             ></input>

@@ -1,15 +1,19 @@
 :root {
-  --primary-color: white;
+  --primary-color: #2c3531;
   --secondary-color: #2a2c2e;
+  --background-color: #f5f5f0;
+  --text-color: #ffffff;
+  --border-color: #d9b08c;
 }
 
 .create-post {
-  border: 1px solid grey;
+  border: 1px solid #ffcb9a;
   border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   background-color: var(--primary-color);
+  margin-top: 1rem;
 }
 
 .createPost-userImage {
@@ -24,27 +28,36 @@
   width: 100%;
   border-radius: 2rem;
   padding: 0.7rem 1rem;
-  margin: 0.5rem 1rem;
-  background-color: #f5f5f0;
+  margin: 0.3rem 0.6rem;
+  background-color: var(--background-color);
   border: none;
   outline: none;
+  color: var(--text-color);
+}
+
+.createPost-input::placeholder {
+  color: var(--text-color);
 }
 
 .create-idea-popup {
+  display: flex;
+  flex-direction: column;
   z-index: 10;
   position: fixed;
   top: 25%;
-  left: 25%;
+  left: 26%;
   width: 40%;
-  height: 50vh;
+
   background-color: var(--primary-color);
   padding: 1rem 1rem;
   border-radius: 0.5rem;
+  color: var(--border-color);
 }
 
 .createIdeaform {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .idea-title {
@@ -52,7 +65,7 @@
   margin: 0.3rem 0.3rem;
   border-radius: 1rem;
   outline: none;
-  border: 1px solid grey;
+  border: 1px solid var(--border-color);
 }
 
 .idea-desc {
@@ -61,7 +74,7 @@
   margin: 0.3rem 0.3rem;
   border-radius: 1rem;
   outline: none;
-  order: 1px solid grey;
+  border: 1px solid var(--border-color);
 }
 
 .ideas-add-tags {
@@ -75,19 +88,23 @@
   list-style-type: none;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .added-tags {
-  margin: 0.5rem;
+  margin: 0.4rem;
 }
 .remove-tag-btn {
   border: none;
   background-color: var(--primary-color);
+  color: var(--text-color);
+  margin: 0.2rem;
 }
 
 .idea-tag {
-  padding: 0.2rem 0.4rem;
-  margin: 0.2rem 0.2rem;
+  padding: 0.1rem 0.2rem;
+  margin: 0.1rem 0.5rem;
+  margin-top: 0.5rem;
   border: 1px solid grey;
   border-radius: 0.5rem;
 }
@@ -102,6 +119,7 @@
   border: none;
   background-color: var(--primary-color);
   float: right;
+  color: var(--text-color);
 }
 
 .create-idea-btn {
@@ -110,6 +128,17 @@
   padding: 0.3rem 0.5rem;
   border-radius: 0.5rem;
   outline: none;
-  border: 1px solid grey;
-  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  margin: 0.5rem;
+}
+
+@media screen and (max-width: 767px) {
+  .create-post {
+    position: fixed;
+    left: 0;
+    width: 70%;
+    margin-left: 0.2rem;
+  }
 }
