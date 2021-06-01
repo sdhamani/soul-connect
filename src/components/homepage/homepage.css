@@ -8,6 +8,7 @@
   --background-color: #116466;
   --news-background: #2c3531;
   --text-color: #ffffff;
+  --border-color: #ffcb9a;
 }
 
 .homepage-div {
@@ -32,7 +33,22 @@
   padding: 0.2rem 1.2rem;
   font-weight: 600;
 }
+.homepage-deadline {
+  margin: 0.2rem 0.2rem;
+  color: var(--text-color);
+  animation: animate 20s linear infinite;
+  position: fixed;
+  top: 8.2%;
+}
 
+@keyframes animate {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(100%, 0);
+  }
+}
 @media screen and (max-width: 767px) {
   .homepage-posts {
     margin-top: 15rem;
@@ -40,10 +56,17 @@
     margin: 1rem 1rem;
   }
   .homepage-content {
+    margin-top: 5rem;
     justify-content: flex-start;
   }
 
   .sidebar {
     display: none;
+  }
+  .homepage-deadline {
+    margin: 0.2rem 0.2rem;
+    font-size: 0.7rem;
+    top: 11.2%;
+    height: 0.2rem;
   }
 }
