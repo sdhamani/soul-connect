@@ -29,7 +29,6 @@ function Posts() {
       </div>
       <div>
         {ideas.map((idea) => {
-          console.log({ ideas });
           let user = users.find((user) => user.id === idea.userId);
           return (
             <div key={idea.id} className="idea">
@@ -61,10 +60,14 @@ function Posts() {
                       : "fa fa-arrow-up"
                   }
                   onClick={(e) =>
-                    ideasDispatch({ TYPE: "LIKE", PAYLOAD: idea.id })
+                    ideasDispatch({
+                      TYPE: "LIKE",
+                      PAYLOAD: { id: idea.id, userId: loggedInUser.id },
+                    })
                   }
                   aria-hidden="true"
                 ></i>
+                <span>{idea.votes.length}</span>
               </div>
             </div>
           );
