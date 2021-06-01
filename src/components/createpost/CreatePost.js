@@ -9,7 +9,7 @@ function CreatePost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { employeeId } = useLogin();
-  const { ideas, ideasDispatch } = useIdeas();
+  const { ideasDispatch } = useIdeas();
   const [showCreateIdea, setShowCreateIdea] = useState(false);
   const [tags, setTags] = useState([]);
 
