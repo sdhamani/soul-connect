@@ -1,10 +1,11 @@
 import React from "react";
-import users from "../../data/users";
+
 import { useState, useEffect } from "react";
 import "./login.css";
 import Nav from "../navbar/Navbar";
 import useLogin from "../../context/login-context";
 import { useNavigate } from "react-router";
+import checkCredentails from "./checkCredentials";
 
 function Login() {
   const [employeeId, setEmployeeId] = useState("");
@@ -19,23 +20,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const checkCredentails = (employeeId, password) => {
-    let user = users.find((user) => user.employeeId === employeeId);
-    if (!user) {
-      setCredentialsError("Invalid User");
-      return false;
-    } else if (user.password === password) {
-      setloggedIn(true);
-      setuserName(user.name);
-
-      setemployeeId(user.employeeId);
-      return { success: true, user: user };
-    } else {
-      setPasswordError("Incorrect Password");
-      return false;
-    }
-  };
-
   useEffect(() => {
     setCredentialsError("");
     if (employeeId.length === 0) {
@@ -49,31 +33,57 @@ function Login() {
 
   useEffect(() => {
     setCredentialsError("");
-    setPasswordError("");
+
     if (password.length === 0) {
       setPasswordError("This field is required");
+    } else if (passwordError === "Incorrect Password") {
+      setPasswordError("Incorrect Password");
+    } else {
+      setPasswordError("");
     }
-    if (employeeIdError === "" && passwordError === "") {
+    if (
+      (employeeIdError === "" && passwordError === "") ||
+      passwordError === "Incorrect Password"
+    ) {
       setIsSubmitDisabled(false);
     } else {
       setIsSubmitDisabled(true);
     }
   }, [password, employeeIdError, passwordError]);
 
-  const signInUser = async () => {
-    const response = await checkCredentails(employeeId, password);
+  const signInUser = () => {
+    let response = checkCredentails(employeeId, password);
 
     if (response.success) {
-      localStorage?.setItem("login", JSON.stringify({ isUserLoggedIn: true }));
+      setloggedIn(true);
+      setuserName(response.user.name);
+
+      setemployeeId(response.user.employeeId);
+      localStorage?.setItem(
+        "login",
+        JSON.stringify({
+          isUserLoggedIn: true,
+        })
+      );
       localStorage?.setItem(
         "localUserName",
-        JSON.stringify({ localUserName: response.user.name })
+        JSON.stringify({
+          localUserName: response.user.name,
+        })
       );
       localStorage?.setItem(
         "employeeId",
-        JSON.stringify({ employeeId: response.user.employeeId })
+        JSON.stringify({
+          employeeId: response.user.employeeId,
+        })
       );
       navigate("/");
+    } else {
+      if (response.message === "Invalid User") {
+        setCredentialsError(response.message);
+      } else {
+        setPasswordError(response.message);
+      }
     }
     if (employeeIdError === "" && passwordError === "") {
       setIsSubmitDisabled(false);
