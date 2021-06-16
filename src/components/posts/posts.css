@@ -99,3 +99,48 @@
     margin-top: 1rem;
   }
 }
+
+.create-comment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.create-comment-input {
+  background-color: var(--primary-color);
+  border: 1px solid var(--post-text-color);
+  outline: none;
+
+  padding: 0.6rem 1rem;
+  border-radius: 3rem;
+  width: 85%;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  height: auto;
+  margin: 0.5rem 0rem;
+  color: white;
+}
+.comment-desc {
+  font-size: small;
+  width: 85%;
+  height: auto;
+  padding: 0.2rem 0rem;
+  border-radius: 2rem;
+}
+
+.comment-text {
+  width: 88%;
+  height: auto;
+  padding: 0.2rem 0.7rem;
+  background-color: var(--post-like-color);
+  border-radius: 1rem;
+}
+
+.comment-user-image {
+  width: 2rem;
+  height: 2rem;
+  margin: 0.1rem 0.7rem;
+}

@@ -6,12 +6,15 @@ import SideBar from "../sidebar/SideBar";
 import useIdeas from "../../context/ideas-context";
 import users from "../../data/users";
 import useLogin from "../../context/login-context";
+
 function UserPosts() {
   const { ideas, ideasDispatch } = useIdeas();
-  const { employeeId } = useLogin();
-  const loggedInUser = users.find((user) => user.employeeId === employeeId);
+  const { userId } = useLogin();
+  console.log("userId", users, userId);
+  const loggedInUser = users.find((user) => user.id === userId);
 
   const userIdeas = ideas.filter((idea) => idea.userId === loggedInUser?.id);
+  console.log(ideas, loggedInUser, { userIdeas });
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -21,7 +24,6 @@ function UserPosts() {
 
   const addTag = (e) => {
     let liTag = e.target.innerText;
-
     if (userTags.includes(liTag)) {
       setUserTags(userTags.filter((tag) => tag !== liTag));
     } else {
@@ -47,7 +49,7 @@ function UserPosts() {
       tags: userTags,
       editedDate: date,
     };
-    console.log({ newIdea });
+
     ideasDispatch({ TYPE: "EDITIDEA", PAYLOAD: newIdea });
     setShowEditIdea(false);
   };
