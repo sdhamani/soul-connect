@@ -1,96 +1,69 @@
 import React from "react";
-
+import firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { useState, useEffect } from "react";
 import "./login.css";
 import Nav from "../navbar/Navbar";
 import useLogin from "../../context/login-context";
-import { useNavigate } from "react-router";
-import checkCredentails from "./checkCredentials";
+import { useNavigate, useLocation } from "react-router";
 
 function Login() {
-  const [employeeId, setEmployeeId] = useState("");
-  const [password, setPassword] = useState("");
-  const [credentialsError, setCredentialsError] = useState("");
-  const [employeeIdError, setemployeeIdError] = useState("");
-
-  const [passwordError, setPasswordError] = useState("");
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-
-  const { setloggedIn, setuserName, setemployeeId } = useLogin();
-
+  const { loggedIn, setloggedIn, setuserName, setuserImage, setUserId } =
+    useLogin();
   const navigate = useNavigate();
+  const { state } = useLocation();
 
-  useEffect(() => {
-    setCredentialsError("");
-    if (employeeId.length === 0) {
-      setemployeeIdError("This field is required");
-    } else if (!employeeId.startsWith("SB")) {
-      setemployeeIdError("Not a valid employeeId");
-    } else {
-      setemployeeIdError("");
-    }
-  }, [employeeId]);
-
-  useEffect(() => {
-    setCredentialsError("");
-
-    if (password.length === 0) {
-      setPasswordError("This field is required");
-    } else if (passwordError === "Incorrect Password") {
-      setPasswordError("Incorrect Password");
-    } else {
-      setPasswordError("");
-    }
-    if (
-      (employeeIdError === "" && passwordError === "") ||
-      passwordError === "Incorrect Password"
-    ) {
-      setIsSubmitDisabled(false);
-    } else {
-      setIsSubmitDisabled(true);
-    }
-  }, [password, employeeIdError, passwordError]);
-
-  const signInUser = () => {
-    let response = checkCredentails(employeeId, password);
-
-    if (response.success) {
-      setloggedIn(true);
-      setuserName(response.user.name);
-
-      setemployeeId(response.user.employeeId);
-      localStorage?.setItem(
-        "login",
-        JSON.stringify({
-          isUserLoggedIn: true,
-        })
-      );
-      localStorage?.setItem(
-        "localUserName",
-        JSON.stringify({
-          localUserName: response.user.name,
-        })
-      );
-      localStorage?.setItem(
-        "employeeId",
-        JSON.stringify({
-          employeeId: response.user.employeeId,
-        })
-      );
-      navigate("/");
-    } else {
-      if (response.message === "Invalid User") {
-        setCredentialsError(response.message);
-      } else {
-        setPasswordError(response.message);
-      }
-    }
-    if (employeeIdError === "" && passwordError === "") {
-      setIsSubmitDisabled(false);
-    } else {
-      setIsSubmitDisabled(true);
-    }
+  let uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+    callbacks: {
+      signInSuccessWithAuthResult: () => false,
+    },
   };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      setloggedIn(!!user);
+
+      if (user) {
+        setUserId(user.uid);
+        setuserName(user.displayName);
+        setuserImage(user.providerData[0].photoURL);
+        localStorage?.setItem(
+          "user",
+          JSON.stringify({
+            isUserLoggedIn: true,
+            localUserName: user.displayName,
+            userImage: user.providerData[0].photoURL,
+            userId: user.uid,
+          })
+        );
+        navigate("/");
+      } else {
+        navigate("/login");
+      }
+    });
+  }, [loggedIn]);
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyArlrzqz4RbnazxWwOk6AGKoebkjU1TyqA",
+    authDomain: "social-media-b028f.firebaseapp.com",
+    projectId: "social-media-b028f",
+    storageBucket: "social-media-b028f.appspot.com",
+    messagingSenderId: "551745934551",
+    appId: "1:551745934551:web:e603b9d485a94b5f000c92",
+    measurementId: "G-SNMB1BE0P6",
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } else {
+    firebase.app();
+  }
 
   return (
     <div>
@@ -99,50 +72,10 @@ function Login() {
       <div className="login-div">
         <div className="login-center-div">
           <div className="login-card">
-            <h1 className="login-account">Login Account</h1>
-
-            <div className="login-input-div">
-              <input
-                placeholder="Enter an employee Id"
-                className="login-input"
-                onChange={(e) => setEmployeeId(e.target.value)}
-                type="input"
-              ></input>
-            </div>
-            {employeeIdError !== "" ? (
-              <p className="input-check">*{employeeIdError}</p>
-            ) : null}
-            <div className="login-input-div">
-              <input
-                id="login-password"
-                placeholder="Enter Password"
-                className="login-input"
-                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$"
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-              ></input>
-            </div>
-
-            {passwordError !== "" ? (
-              <p className="input-check">*{passwordError}</p>
-            ) : null}
-
-            {credentialsError !== "" ? (
-              <p className="input-check">*{credentialsError}</p>
-            ) : null}
-
-            <input
-              type="submit"
-              // value={showLoading ? "SIGNING IN" : "SIGN IN"}
-              value={"SIGN IN"}
-              className={
-                isSubmitDisabled
-                  ? "disabled-btn signin"
-                  : "btn primary-button signin"
-              }
-              onClick={(e) => signInUser()}
-              disabled={isSubmitDisabled}
-            ></input>
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
           </div>
         </div>
       </div>
