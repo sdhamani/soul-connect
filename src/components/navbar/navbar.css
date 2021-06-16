@@ -51,6 +51,7 @@
 }
 
 .nav-heading {
+  width: 20%;
   font-size: 1.4rem;
   margin: 0.8rem;
   padding: 0rem 1rem;
@@ -64,7 +65,7 @@
 }
 
 .logout-div {
-  width: 86%;
+  width: 30%;
   display: flex;
   justify-content: flex-end;
 }
@@ -85,6 +86,23 @@
   padding: 0rem 0rem;
   color: var(--text-color);
 }
+
+.search-user {
+  float: right;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
+.search-user-input {
+  width: 50%;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  margin: 0rem 1rem;
+  outline: none;
+}
+
 @media screen and (max-width: 767px) {
   .hamburger {
     display: initial;
