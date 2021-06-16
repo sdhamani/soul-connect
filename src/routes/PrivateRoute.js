@@ -3,8 +3,8 @@ import { Route, Navigate } from "react-router-dom";
 
 function PrivateRoute({ path, ...props }) {
   let isUserLoggedIn = false;
-  if (localStorage?.getItem("login")) {
-    isUserLoggedIn = JSON.parse(localStorage?.getItem("login"));
+  if (localStorage?.getItem("user")) {
+    isUserLoggedIn = JSON.parse(localStorage?.getItem("user"));
   }
 
   return isUserLoggedIn.isUserLoggedIn ? (
