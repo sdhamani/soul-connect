@@ -6,9 +6,10 @@ import "./createPost.css";
 import { v4 as uuidv4 } from "uuid";
 
 function CreatePost() {
+  const { userName, employeeId, userImage } = useLogin();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const { employeeId } = useLogin();
+
   const { ideasDispatch } = useIdeas();
   const [showCreateIdea, setShowCreateIdea] = useState(false);
   const [tags, setTags] = useState([]);
@@ -16,7 +17,6 @@ function CreatePost() {
   const user = users.find((user) => user.employeeId === employeeId);
   const addTag = (e) => {
     let liTag = e.target.innerText;
-
     if (tags.includes(liTag)) {
       setTags(tags.filter((tag) => tag !== liTag));
     } else {
@@ -55,7 +55,7 @@ function CreatePost() {
       <img
         className="createPost-userImage"
         alt="userImage"
-        src={user?.profileImage}
+        src={userImage}
       ></img>
       <input
         onClick={(e) => setShowCreateIdea(true)}

@@ -1,14 +1,16 @@
 import React from "react";
 
+import firebase from "@firebase/app";
+
 import "./sidebar.css";
 import useLogin from "../../context/login-context";
 import users from "../../data/users";
 import { Link } from "react-router-dom";
 
 function SideBar() {
-  const { userName, employeeId } = useLogin();
+  const { userName, userImage } = useLogin();
+  const user = firebase.auth().currentUser;
 
-  const user = users.find((user) => user.employeeId === employeeId);
   return (
     <div className="sidebar">
       <div>
@@ -16,7 +18,7 @@ function SideBar() {
           <img
             className="sidebar-userImage"
             alt="userImage"
-            src={user?.profileImage}
+            src={userImage}
           ></img>
           <span className="sidebar-userName">{userName}</span>
         </div>
