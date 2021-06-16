@@ -1,3 +1,5 @@
+import useLogin from "../context/login-context";
+
 export default function ideaDispatchFun(state, value) {
   switch (value.TYPE) {
     case "VOTES":
@@ -33,7 +35,10 @@ export default function ideaDispatchFun(state, value) {
                 ...idea,
                 votes: idea.votes.filter((vote) => vote !== userId),
               }
-            : { ...idea, votes: [...idea.votes, userId] };
+            : {
+                ...idea,
+                votes: [...idea.votes, userId],
+              };
         }
         return idea;
       });
@@ -54,6 +59,27 @@ export default function ideaDispatchFun(state, value) {
       return editedArray;
     case "DELETEIDEA":
       return state.filter((idea) => idea.id !== value.PAYLOAD);
+    case "ADDCOMMENT":
+      console.log("value", value);
+      const newComment = {
+        description: value.PAYLOAD.commentText,
+        userName: value.PAYLOAD.userName,
+        userImage: value.PAYLOAD.userImage,
+      };
+
+      return state.map((idea) => {
+        if (idea.id === value.PAYLOAD.ideaId) {
+          const newIdea = {
+            ...idea,
+            comments: [...idea.comments, newComment],
+          };
+
+          return newIdea;
+        } else {
+          return idea;
+        }
+      });
+
     default:
       return state;
   }
