@@ -1,7 +1,6 @@
 import users from "../data/users";
 
 export default function usersReducer(state = users, value) {
-  console.log({ state });
   switch (value.type) {
     case "UPDATEFOLLOWING":
       const searchedUserId = value.payload.searchedUserId;
