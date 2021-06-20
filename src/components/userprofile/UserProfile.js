@@ -1,8 +1,6 @@
 import React from "react";
 import Nav from "../navbar/Navbar";
-import SideBar from "../sidebar/SideBar";
-
-import useLogin from "../../context/login-context";
+import "./userprofile.css";
 import { useParams } from "react-router";
 import { updateFollowing } from "../../actions/users-actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,15 +11,13 @@ function UserProfile() {
   const posts = useSelector((state) => state.posts);
 
   const allUsers = useSelector((state) => state.allUsers);
-  console.log({ allUsers });
+
   const dispatch = useDispatch();
   const { userId } = JSON.parse(localStorage?.getItem("user"));
 
   const LoggedInUser = allUsers.find((user) => user.id === userId);
 
   const searchedUser = allUsers.find((user) => user.id === searcheduserId);
-
-  console.log({ LoggedInUser }, { searchedUser });
 
   const userIdeas = posts.filter((idea) => idea.userId === searchedUser?.id);
 
@@ -42,14 +38,14 @@ function UserProfile() {
 
             <div className="sidebar-myposts">
               <button
-                className="sidebar-my-posts-link"
+                className="follow-btn"
                 onClick={(e) =>
                   dispatch(updateFollowing(searchedUser.id, LoggedInUser.id))
                 }
               >
                 {LoggedInUser.following.includes(searcheduserId)
                   ? "Following"
-                  : "follow"}
+                  : "Follow"}
               </button>
             </div>
           </div>
