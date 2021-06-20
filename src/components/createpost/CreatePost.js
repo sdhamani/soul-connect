@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import useIdeas from "../../context/ideas-context";
+
 import useLogin from "../../context/login-context";
 import users from "../../data/users";
 import "./createPost.css";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+import { addPost } from "../../actions/posts-action";
 
 function CreatePost() {
-  const { userName, employeeId, userImage } = useLogin();
+  const { userId, userImage } = useLogin();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
 
-  const { ideasDispatch } = useIdeas();
   const [showCreateIdea, setShowCreateIdea] = useState(false);
   const [tags, setTags] = useState([]);
 
-  const user = users.find((user) => user.employeeId === employeeId);
   const addTag = (e) => {
     let liTag = e.target.innerText;
     if (tags.includes(liTag)) {
@@ -26,7 +27,7 @@ function CreatePost() {
   };
 
   const createIdea = () => {
-    let user = users.find((user) => (user.employeeId = employeeId));
+    let user = users.find((user) => (user.userId = userId));
     let today = new Date();
 
     let date =
@@ -46,7 +47,8 @@ function CreatePost() {
       creationDate: date,
       votes: [],
     };
-    ideasDispatch({ TYPE: "ADDIDEA", PAYLOAD: newIdea });
+    dispatch(addPost(newIdea));
+    setTags([]);
     setShowCreateIdea(false);
   };
 

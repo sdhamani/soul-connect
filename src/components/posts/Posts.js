@@ -1,27 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import useLogin from "../../context/login-context";
-import firebase from "@firebase/app";
+import { useDispatch, useSelector } from "react-redux";
 import "./posts.css";
 import users from "../../data/users";
-import useIdeas from "../../context/ideas-context";
+import { addComment, likePost, sortBy } from "../../actions/posts-action";
 
 function Posts() {
-  const { ideas, ideasDispatch } = useIdeas();
   const { userName, userImage } = useLogin();
-
+  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
   const loggedInUser = users.find((user) => user.employeeId);
 
   const handleKeyPress = (e, id) => {
     if (e.key === "Enter") {
-      ideasDispatch({
-        TYPE: "ADDCOMMENT",
-        PAYLOAD: {
-          commentText: e.target.value,
-          ideaId: id,
-          userName: userName,
-          userImage: userImage,
-        },
-      });
+      dispatch(addComment(e.target.value, id, userName, userImage));
       e.target.value = "";
     }
   };
@@ -29,10 +21,10 @@ function Posts() {
   return (
     <div className="all-posts">
       <div className="posts-sortby">
-        <label for="posts">SortBy:</label>
+        <label>SortBy:</label>
 
-        <select onChange={(e) => ideasDispatch({ TYPE: e.target.value })}>
-          <option hidden selected value>
+        <select defaultValue onChange={(e) => dispatch(sortBy(e.target.value))}>
+          <option defaultValue hidden value="select">
             {" "}
             select an option
           </option>
@@ -43,9 +35,8 @@ function Posts() {
         </select>
       </div>
       <div>
-        {ideas.map((idea) => {
+        {posts.map((idea) => {
           let user = users.find((user) => user.id === idea.userId);
-
           return (
             <div key={idea.id} className="idea">
               <div className="idea-heading">
@@ -64,7 +55,9 @@ function Posts() {
               <div className="idea-description">{idea.description}</div>
               <div className="added-tags-posts">
                 {idea.tags.map((tag) => (
-                  <span className="idea-tag">{tag}</span>
+                  <span key={tag} className="idea-tag">
+                    {tag}
+                  </span>
                 ))}
               </div>
               <hr></hr>
@@ -75,12 +68,7 @@ function Posts() {
                       ? "fa fa-arrow-up liked"
                       : "fa fa-arrow-up"
                   }
-                  onClick={(e) =>
-                    ideasDispatch({
-                      TYPE: "LIKE",
-                      PAYLOAD: { id: idea.id, userId: loggedInUser.id },
-                    })
-                  }
+                  onClick={(e) => dispatch(likePost(idea.id, loggedInUser.id))}
                   aria-hidden="true"
                 ></i>
                 <span>{idea.votes.length}</span>
@@ -101,7 +89,7 @@ function Posts() {
               <div className="comments">
                 {idea.comments?.map((comment) => {
                   return (
-                    <div className="comment">
+                    <div key={comment.userName} className="comment">
                       <img
                         className="createPost-userImage comment-user-image"
                         src={comment.userImage}

@@ -3,18 +3,22 @@ import { useState } from "react";
 import "./userposts.css";
 import Nav from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
-import useIdeas from "../../context/ideas-context";
+
 import users from "../../data/users";
 import useLogin from "../../context/login-context";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost, editPost } from "../../actions/posts-action";
 
 function UserPosts() {
-  const { ideas, ideasDispatch } = useIdeas();
+  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+
   const { userId } = useLogin();
-  console.log("userId", users, userId);
+
   const loggedInUser = users.find((user) => user.id === userId);
 
-  const userIdeas = ideas.filter((idea) => idea.userId === loggedInUser?.id);
-  console.log(ideas, loggedInUser, { userIdeas });
+  const userIdeas = posts.filter((idea) => idea.userId === loggedInUser?.id);
+  console.log(posts, loggedInUser, { userIdeas });
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -42,15 +46,15 @@ function UserPosts() {
       "/" +
       today.getFullYear();
 
-    let newIdea = {
+    let newPost = {
       id: id,
       title: title,
       description: description,
       tags: userTags,
       editedDate: date,
     };
+    dispatch(editPost(newPost));
 
-    ideasDispatch({ TYPE: "EDITIDEA", PAYLOAD: newIdea });
     setShowEditIdea(false);
   };
 
@@ -64,7 +68,6 @@ function UserPosts() {
             {userIdeas.length > 0 ? (
               userIdeas.map((idea) => {
                 let user = users.find((user) => user.id === idea.userId);
-
                 return (
                   <div key={idea.id} className="idea">
                     {showDeleteIdea && (
@@ -77,11 +80,7 @@ function UserPosts() {
                           <button
                             className="delete-idea-button"
                             onClick={(e) => {
-                              ideasDispatch({
-                                TYPE: "DELETEIDEA",
-                                PAYLOAD: idea.id,
-                              });
-
+                              dispatch(deletePost(idea.id));
                               setShowDeleteIdea(false);
                             }}
                           >
