@@ -29,6 +29,7 @@ function Login() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
+      console.log({ user });
       if (user) {
         const userObj = {
           loggedIn: !!user,
