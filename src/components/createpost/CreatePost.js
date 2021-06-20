@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 
-import useLogin from "../../context/login-context";
 import users from "../../data/users";
 import "./createPost.css";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../../actions/posts-action";
 
 function CreatePost() {
-  const { userId, userImage } = useLogin();
+  const loggedInUser = useSelector((state) => state.loggedInUser);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ function CreatePost() {
   };
 
   const createIdea = () => {
-    let user = users.find((user) => (user.userId = userId));
+    let user = users.find((user) => (user.userId = loggedInUser.userId));
     let today = new Date();
 
     let date =
@@ -57,7 +56,7 @@ function CreatePost() {
       <img
         className="createPost-userImage"
         alt="userImage"
-        src={userImage}
+        src={loggedInUser.userImage}
       ></img>
       <input
         onClick={(e) => setShowCreateIdea(true)}
