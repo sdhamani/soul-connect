@@ -4,17 +4,19 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { LoginProvider } from "./context/login-context";
-import { IdeasProvider } from "./context/ideas-context";
+
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <LoginProvider>
-      <IdeasProvider>
+    <Provider store={store}>
+      <LoginProvider>
         <Router>
           <App />
         </Router>
-      </IdeasProvider>
-    </LoginProvider>
+      </LoginProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
