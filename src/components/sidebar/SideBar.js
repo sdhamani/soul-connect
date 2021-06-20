@@ -1,13 +1,12 @@
 import React from "react";
 
 import "./sidebar.css";
-import useLogin from "../../context/login-context";
 
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function SideBar() {
-  const { userName, userImage } = useLogin();
-
+  const loggedInUser = useSelector((state) => state.loggedInUser);
   return (
     <div className="sidebar">
       <div>
@@ -15,9 +14,9 @@ function SideBar() {
           <img
             className="sidebar-userImage"
             alt="userImage"
-            src={userImage}
+            src={loggedInUser.userImage}
           ></img>
-          <span className="sidebar-userName">{userName}</span>
+          <span className="sidebar-userName">{loggedInUser.userName}</span>
         </div>
 
         <div className="sidebar-myposts">

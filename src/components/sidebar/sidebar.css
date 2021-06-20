@@ -30,8 +30,9 @@
 
 .sidebar-userName {
   color: var(--sidebar-text);
-  font-weight: 800;
+  font-weight: 700;
   margin-top: 0.6rem;
+  font-size: large;
 }
 
 .sidebar-userImage {
