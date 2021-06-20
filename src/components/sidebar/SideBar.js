@@ -1,15 +1,12 @@
 import React from "react";
 
-import firebase from "@firebase/app";
-
 import "./sidebar.css";
 import useLogin from "../../context/login-context";
-import users from "../../data/users";
+
 import { Link } from "react-router-dom";
 
 function SideBar() {
   const { userName, userImage } = useLogin();
-  const user = firebase.auth().currentUser;
 
   return (
     <div className="sidebar">
