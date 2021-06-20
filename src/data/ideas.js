@@ -1,7 +1,7 @@
 let allIdeas = [
   {
     id: "i001",
-    hackathon: "May 21",
+
     userId: "U9tuKCrtktd1VZyagZhoes5EN0g1",
     title: "Company Portal",
     description:
@@ -27,7 +27,6 @@ let allIdeas = [
   },
   {
     id: "i002",
-    hackathon: "May 21",
     userId: "u124",
     title: "Messaging Application",
     description:

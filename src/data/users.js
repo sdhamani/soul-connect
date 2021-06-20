@@ -2,7 +2,6 @@ let users = [
   {
     id: "U9tuKCrtktd1VZyagZhoes5EN0g1",
     name: "Sagar Dhamani",
-    employeeId: "SB153560",
     password: "Sagar@123",
     profileImage: "https://serene-ui.netlify.app/Images/profile-photo.jpg",
     following: ["u124"],
@@ -12,7 +11,6 @@ let users = [
   {
     id: "u124",
     name: "Anurag Rathod",
-    employeeId: "SB133562",
     password: "Anurag@123",
     following: ["U9tuKCrtktd1VZyagZhoes5EN0g1"],
     followers: ["U9tuKCrtktd1VZyagZhoes5EN0g1"],
