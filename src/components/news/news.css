@@ -19,6 +19,10 @@
   margin: 0.3rem;
   padding-left: 0.5rem;
 }
+
+.homepage-news-list-item {
+  margin: 0.5rem 0.3rem;
+}
 @media screen and (max-width: 767px) {
   html {
     background-color: var(--background-color);

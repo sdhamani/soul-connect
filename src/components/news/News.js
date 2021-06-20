@@ -6,24 +6,19 @@ function News() {
     <div className="homepage-news">
       <span className="news-heading">Hack Ideas News</span>
       <ul className="homepage-news-list">
-        <li>
-          CEO Mr x address the importance of innovation in latest meet with
-          global leaders
+        <li className="homepage-news-list-item">
+          Anurag Rathod has commented on your post "Great Post".
         </li>
-        <li>
-          Deadline to submit projects for this month extended till 15th June.
+        <li className="homepage-news-list-item">
+          Anurag Rathod has like your post.
         </li>
-        <li>Damage assesment app wins the April Hackathon </li>
-        <li>
-          Project with changes in chat bot brings increased customer
-          satisfaction
+        <li className="homepage-news-list-item">Rajeev has liked your post.</li>
+        <li className="homepage-news-list-item">
+          Try using our new add tags feature while creating the post.
         </li>
-        <li>
-          Several ideas about healthcare system have been selected for the
-          second stage.
+        <li className="homepage-news-list-item">
+          Ravina has like your picture.
         </li>
-        <li>"Its great to see so many great ideas come up" - CTO</li>
-        <li>April's Hackthon records the highest number of entries ever.</li>
       </ul>
     </div>
   );
