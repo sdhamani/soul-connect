@@ -15,7 +15,7 @@ export function LoginProvider({ children }) {
 
   useEffect(() => {
     var firebaseConfig = {
-      apiKey: "AIzaSyArlrzqz4RbnazxWwOk6AGKoebkjU1TyqA",
+      apiKey: process.env.REACT_APP_API_KEY,
       authDomain: "social-media-b028f.firebaseapp.com",
       projectId: "social-media-b028f",
       storageBucket: "social-media-b028f.appspot.com",
@@ -29,13 +29,12 @@ export function LoginProvider({ children }) {
     } else {
       firebase.app();
     }
-    console.log("auth", firebase.auth());
 
     if (localStorage.getItem("user")) {
       const { isUserLoggedIn, localUserName, userImage, userId } = JSON.parse(
         localStorage?.getItem("user")
       );
-      console.log("lc", { isUserLoggedIn, localUserName, userImage, userId });
+
       isUserLoggedIn && setloggedIn(true);
       setUserId(userId);
       setuserName(localUserName);
