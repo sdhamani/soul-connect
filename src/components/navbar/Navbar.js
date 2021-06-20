@@ -4,15 +4,29 @@ import "./navbar.css";
 import { Link } from "react-router-dom";
 import useLogin from "../../context/login-context";
 import firebase from "firebase";
-
+import users from "../../data/users";
 import SideBar from "../sidebar/SideBar";
 
-export default function Nav({ route, setRoute }) {
+export default function Nav() {
   const navigate = useNavigate();
   const { loggedIn, setloggedIn, userName } = useLogin();
   const [showSide, setshowSide] = useState(false);
+  const [suggestedUsers, setSuggestedUsers] = useState([]);
+
+  const searchUsers = (event) => {
+    const userInput = event.target.value;
+    if (userInput !== "") {
+      const filteredUsers = users.filter((user) => {
+        return user.name.toLowerCase().startsWith(userInput.toLowerCase());
+      });
+      setSuggestedUsers(filteredUsers);
+    } else {
+      setSuggestedUsers([]);
+    }
+  };
+
   var firebaseConfig = {
-    apiKey: "AIzaSyArlrzqz4RbnazxWwOk6AGKoebkjU1TyqA",
+    apiKey: process.env.REACT_APP_API_KEY,
     authDomain: "social-media-b028f.firebaseapp.com",
     projectId: "social-media-b028f",
     storageBucket: "social-media-b028f.appspot.com",
@@ -55,13 +69,26 @@ export default function Nav({ route, setRoute }) {
             Hack Ideas
           </Link>
         </h1>
-        <form class="search-user">
+        <form className="search-user">
           <input
-            class="search-user-input"
+            onChange={(e) => searchUsers(e)}
+            className="search-user-input"
             type="search"
             placeholder="Search user"
             aria-label="Search"
           />
+          <div className="suggesterd-users">
+            <ul className="suggesterd-users-list">
+              {suggestedUsers.map((user) => (
+                <Link
+                  className="search-user-link"
+                  to={`/userprofile/${user.id}`}
+                >
+                  <li className="suggesterd-user">{user.name}</li>
+                </Link>
+              ))}
+            </ul>
+          </div>
         </form>
         {loggedIn === true ? (
           <div className="logout-div">

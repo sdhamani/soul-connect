@@ -1,6 +1,7 @@
 :root {
   --nav-background: #2c3531;
   --text-color: #ffffff;
+  --text-color-black: black;
   --nav-color: #116466;
 }
 
@@ -101,6 +102,32 @@
   padding: 0.5rem 1rem;
   margin: 0rem 1rem;
   outline: none;
+}
+
+.suggesterd-users {
+  border-radius: 0.7rem;
+  position: fixed;
+  background-color: white;
+  /* color: white; */
+  width: 29.5%;
+  top: 6.8%;
+}
+
+.suggesterd-users-list {
+  border-radius: 1rem;
+  list-style: none;
+}
+
+.suggesterd-user {
+  margin: 0.5rem 0.2rem;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2rem;
+}
+
+.search-user-link {
+  text-decoration: none;
+  color: var(--text-color-black);
 }
 
 @media screen and (max-width: 767px) {
