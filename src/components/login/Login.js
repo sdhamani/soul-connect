@@ -1,17 +1,16 @@
 import React from "react";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./login.css";
 import Nav from "../navbar/Navbar";
 import useLogin from "../../context/login-context";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate} from "react-router";
 
 function Login() {
   const { loggedIn, setloggedIn, setuserName, setuserImage, setUserId } =
     useLogin();
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   let uiConfig = {
     signInFlow: "popup",
@@ -50,7 +49,7 @@ function Login() {
   }, [loggedIn]);
 
   var firebaseConfig = {
-    apiKey: "AIzaSyArlrzqz4RbnazxWwOk6AGKoebkjU1TyqA",
+    apiKey: process.env.REACT_APP_API_KEY,
     authDomain: "social-media-b028f.firebaseapp.com",
     projectId: "social-media-b028f",
     storageBucket: "social-media-b028f.appspot.com",

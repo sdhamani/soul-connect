@@ -7,7 +7,6 @@ import News from "../news/News";
 import Posts from "../posts/Posts";
 
 export default function HomePage() {
-  console.log("rendering homepage");
   return (
     <div className="homepage-div">
       <Nav />
