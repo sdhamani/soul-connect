@@ -1,19 +1,25 @@
 import React from "react";
-import useLogin from "../../context/login-context";
+
 import { useDispatch, useSelector } from "react-redux";
 import "./posts.css";
 import users from "../../data/users";
 import { addComment, likePost, sortBy } from "../../actions/posts-action";
 
 function Posts() {
-  const { userName, userImage } = useLogin();
+  const loggedInUser = useSelector((state) => state.loggedInUser);
   const posts = useSelector((state) => state.posts);
   const dispatch = useDispatch();
-  const loggedInUser = users.find((user) => user.employeeId);
 
   const handleKeyPress = (e, id) => {
     if (e.key === "Enter") {
-      dispatch(addComment(e.target.value, id, userName, userImage));
+      dispatch(
+        addComment(
+          e.target.value,
+          id,
+          loggedInUser.userName,
+          loggedInUser.userImage
+        )
+      );
       e.target.value = "";
     }
   };
@@ -44,7 +50,7 @@ function Posts() {
                 <img
                   className="createPost-userImage"
                   alt="userImage"
-                  src={userImage}
+                  src={loggedInUser.userImage}
                 ></img>
                 <div>
                   <div>{user?.name}</div>
@@ -76,7 +82,7 @@ function Posts() {
               <div className="create-comment">
                 <img
                   className="createPost-userImage"
-                  src={userImage}
+                  src={loggedInUser.userImage}
                   alt="user"
                 />
                 <input

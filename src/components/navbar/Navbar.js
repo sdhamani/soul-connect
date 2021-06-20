@@ -2,21 +2,31 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
-import useLogin from "../../context/login-context";
+
 import firebase from "firebase";
-import users from "../../data/users";
+
 import SideBar from "../sidebar/SideBar";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../actions/login-action";
 
 export default function Nav() {
+  const allUsers = useSelector((state) => state.allUsers);
+  const dispatch = useDispatch();
+  const loggedInUser = useSelector((state) => state.loggedInUser);
   const navigate = useNavigate();
-  const { loggedIn, setloggedIn, userName } = useLogin();
+
   const [showSide, setshowSide] = useState(false);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
 
   const searchUsers = (event) => {
     const userInput = event.target.value;
     if (userInput !== "") {
-      const filteredUsers = users.filter((user) => {
+      console.log({ loggedInUser });
+      const otherUsers = allUsers.filter(
+        (user) => user.id !== loggedInUser.userId
+      );
+      console.log({ otherUsers });
+      const filteredUsers = otherUsers.filter((user) => {
         return user.name.toLowerCase().startsWith(userInput.toLowerCase());
       });
       setSuggestedUsers(filteredUsers);
@@ -42,10 +52,11 @@ export default function Nav() {
   }
   function logoutFun() {
     firebase.auth().signOut();
-    setloggedIn(false);
+    dispatch(logoutUser());
+
     localStorage?.setItem(
       "user",
-      JSON.stringify({ isUserLoggedIn: false, localUserName: "" })
+      JSON.stringify({ isUserLoggedIn: false, localUserName: "", userId: "" })
     );
 
     navigate("/login");
@@ -69,30 +80,33 @@ export default function Nav() {
             Hack Ideas
           </Link>
         </h1>
-        <form className="search-user">
-          <input
-            onChange={(e) => searchUsers(e)}
-            className="search-user-input"
-            type="search"
-            placeholder="Search user"
-            aria-label="Search"
-          />
-          <div className="suggesterd-users">
-            <ul className="suggesterd-users-list">
-              {suggestedUsers.map((user) => (
-                <Link
-                  className="search-user-link"
-                  to={`/userprofile/${user.id}`}
-                >
-                  <li className="suggesterd-user">{user.name}</li>
-                </Link>
-              ))}
-            </ul>
-          </div>
-        </form>
-        {loggedIn === true ? (
+        {loggedInUser.loggedIn === true ? (
+          <form className="search-user">
+            <input
+              onChange={(e) => searchUsers(e)}
+              className="search-user-input"
+              type="search"
+              placeholder="Search user"
+              aria-label="Search"
+            />
+            <div className="suggesterd-users">
+              <ul className="suggesterd-users-list">
+                {suggestedUsers.map((user) => (
+                  <Link
+                    key={user.id}
+                    className="search-user-link"
+                    to={`/userprofile/${user.id}`}
+                  >
+                    <li className="suggesterd-user">{user.name}</li>
+                  </Link>
+                ))}
+              </ul>
+            </div>
+          </form>
+        ) : null}
+        {loggedInUser.loggedIn === true ? (
           <div className="logout-div">
-            <h3 className="nav-userName">Hi {userName} !</h3>
+            <h3 className="nav-userName">Hi {loggedInUser.userName} !</h3>
             <button className="logout-btn" onClick={logoutFun}>
               Logout
             </button>

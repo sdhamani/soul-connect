@@ -5,7 +5,7 @@ import Nav from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
 
 import users from "../../data/users";
-import useLogin from "../../context/login-context";
+
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost, editPost } from "../../actions/posts-action";
 
@@ -13,12 +13,11 @@ function UserPosts() {
   const posts = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
-  const { userId } = useLogin();
+  const loggedInUser = useSelector((state) => state.loggedInUser);
 
-  const loggedInUser = users.find((user) => user.id === userId);
-
-  const userIdeas = posts.filter((idea) => idea.userId === loggedInUser?.id);
-  console.log(posts, loggedInUser, { userIdeas });
+  const userPosts = posts.filter(
+    (post) => post.userId === loggedInUser?.userId
+  );
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -65,11 +64,11 @@ function UserPosts() {
         <SideBar />
         <div className="userposts-posts">
           <div>
-            {userIdeas.length > 0 ? (
-              userIdeas.map((idea) => {
+            {userPosts.length > 0 ? (
+              userPosts.map((idea, index) => {
                 let user = users.find((user) => user.id === idea.userId);
                 return (
-                  <div key={idea.id} className="idea">
+                  <div key={index} className="idea">
                     {showDeleteIdea && (
                       <div className="delete-idea-popup">
                         <div className="delete-idea-heading">
@@ -128,7 +127,7 @@ function UserPosts() {
                         </form>
                         <div className="added-tags">
                           {userTags.map((tag) => (
-                            <span className="idea-tag">
+                            <span key={tag} className="idea-tag">
                               {tag}
                               <button
                                 className="remove-tag-btn"
@@ -192,7 +191,9 @@ function UserPosts() {
                     <div className="idea-description">{idea.description}</div>
                     <div className="added-tags-posts">
                       {idea.tags.map((tag) => (
-                        <span className="idea-tag">{tag}</span>
+                        <span key={tag} className="idea-tag">
+                          {tag}
+                        </span>
                       ))}
                     </div>
                     <hr></hr>

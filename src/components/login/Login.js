@@ -4,12 +4,15 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { useEffect } from "react";
 import "./login.css";
 import Nav from "../navbar/Navbar";
-import useLogin from "../../context/login-context";
-import { useNavigate} from "react-router";
+
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../actions/login-action";
 
 function Login() {
-  const { loggedIn, setloggedIn, setuserName, setuserImage, setUserId } =
-    useLogin();
+  const loggedInUser = useSelector((state) => state.loggedInUser);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   let uiConfig = {
@@ -26,17 +29,20 @@ function Login() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      setloggedIn(!!user);
-
       if (user) {
-        setUserId(user.uid);
-        setuserName(user.displayName);
-        setuserImage(user.providerData[0].photoURL);
+        const userObj = {
+          loggedIn: !!user,
+          userName: user.displayName.toUpperCase(),
+          userImage: user.providerData[0].photoURL,
+          userId: user.uid,
+        };
+        dispatch(updateUser(userObj));
+
         localStorage?.setItem(
           "user",
           JSON.stringify({
             isUserLoggedIn: true,
-            localUserName: user.displayName,
+            localUserName: user.displayName.toUpperCase(),
             userImage: user.providerData[0].photoURL,
             userId: user.uid,
           })
@@ -46,7 +52,7 @@ function Login() {
         navigate("/login");
       }
     });
-  }, [loggedIn]);
+  }, [loggedInUser]);
 
   var firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
