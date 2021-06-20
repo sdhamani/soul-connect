@@ -3,19 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { LoginProvider } from "./context/login-context";
-
 import { Provider } from "react-redux";
 import { store } from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <LoginProvider>
-        <Router>
-          <App />
-        </Router>
-      </LoginProvider>
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
