@@ -11,3 +11,11 @@ export function updateFollowing(searchedUserId, LoggedInUserId) {
     },
   };
 }
+
+export function updateUsers(users) {
+  console.log("inside update following");
+  return {
+    type: "UPDATEUSERS",
+    payload: users,
+  };
+}
