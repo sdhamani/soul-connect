@@ -2,9 +2,8 @@ import React, { useState } from "react";
 
 import "./createPost.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addPostFun, updatePosts } from "../../actions/posts-action";
+import { updatePosts } from "../../actions/posts-action";
 import { addPost } from "../../api/post-api";
-
 function CreatePost() {
   const loggedInUser = useSelector((state) => state.loggedInUser);
   const allUsers = useSelector((state) => state.allUsers);
@@ -27,14 +26,8 @@ function CreatePost() {
 
   const createIdea = async () => {
     let user = allUsers.find((user) => (user.uid = loggedInUser.userId));
-    let today = new Date();
-    console.log({ user });
-    let date =
-      today.getDate() +
-      "/" +
-      parseInt(today.getMonth() + 1) +
-      "/" +
-      today.getFullYear();
+
+    let date = new Date();
 
     let newIdea = {
       userId: user.id,
@@ -112,13 +105,13 @@ function CreatePost() {
           <div className="ideas-add-tags">
             <ul className="ideas-tag-list">
               <li className="idea-tag" value="Tech" onClick={(e) => addTag(e)}>
-                Tech
+                Motivation
               </li>
               <li className="idea-tag" onClick={(e) => addTag(e)}>
-                Feature
+                Peace
               </li>
               <li className="idea-tag" onClick={(e) => addTag(e)}>
-                Innovation
+                Routine
               </li>
             </ul>
           </div>
