@@ -1,4 +1,7 @@
-export default function postsReducer(state = [], value) {
+const { res } = JSON.parse(localStorage?.getItem("allPosts"));
+const intialState = res ? res : [];
+
+export default function postsReducer(state = intialState, value) {
   switch (value.type) {
     case "UPDATEPOSTS":
       return value.payload;
@@ -11,19 +14,19 @@ export default function postsReducer(state = [], value) {
 
     case "EARLIEST_DATE":
       return state.slice().sort(function (a, b) {
-        a = a.creationDate.split("/");
-        b = b.creationDate.split("/");
-        return a[2] - b[2] || a[1] - b[1] || a[0] - b[0];
+        a = new Date(a.creationDate);
+        b = new Date(b.creationDate);
+
+        return b - a;
       });
     case "OLDEST_DATE":
       return state.slice().sort(function (a, b) {
-        a = a.creationDate.split("/");
-        b = b.creationDate.split("/");
-        return b[2] - a[2] || b[1] - a[1] || b[0] - a[0];
+        a = new Date(a.creationDate);
+        b = new Date(b.creationDate);
+        return a - b;
       });
 
     case "ADDPOST":
-      console.log("ADDPOST", value.payload);
       return [...state, value.payload];
     case "LIKEPOST":
       const userId = value.payload.userId;

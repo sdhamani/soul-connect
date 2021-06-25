@@ -4,8 +4,6 @@ import "./userposts.css";
 import Nav from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
 
-// import users from "../../data/users";
-
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost, editPost } from "../../actions/posts-action";
 
@@ -19,7 +17,6 @@ function UserPosts() {
   const userPosts = posts.filter(
     (post) => post.userId === loggedInUser?.userId
   );
-  console.log({ posts }, { loggedInUser });
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
