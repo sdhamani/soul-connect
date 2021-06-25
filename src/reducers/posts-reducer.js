@@ -1,6 +1,7 @@
-import ideas from "../data/ideas";
-export default function postsReducer(state = ideas, value) {
+export default function postsReducer(state = [], value) {
   switch (value.type) {
+    case "UPDATEPOSTS":
+      return value.payload;
     case "VOTES":
       return state.slice().sort(function (a, b) {
         let aVotesLength = a.votes.length;
