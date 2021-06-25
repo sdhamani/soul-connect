@@ -64,7 +64,7 @@ export default function Nav() {
   useEffect(() => {
     const getUsers = async () => {
       const users = await GetUsers();
-      console.log("cheking", users);
+
       localStorage?.setItem(
         "allUsers",
         JSON.stringify({
@@ -92,7 +92,7 @@ export default function Nav() {
         </div>
         <h1 className="nav-heading">
           <Link className="nav-header-link" to="/">
-            Hack Ideas
+            Soul Connect
           </Link>
         </h1>
         {loggedInUser.loggedIn === true ? (

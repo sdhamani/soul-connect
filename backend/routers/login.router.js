@@ -33,11 +33,12 @@ router.route("/").post(async (req, res) => {
       });
 
       const savedUser = await NewUser.save();
+
       const userId = savedUser._id;
       const userName = savedUser.name;
-      console.log("token", process.env.tokenSecret);
+
       const token = jwt.sign({ _id: userId }, process.env.tokenSecret);
-      console.log("User created");
+
       res.status(200).header("auth-token", token).json({
         success: true,
         userid: userId,
