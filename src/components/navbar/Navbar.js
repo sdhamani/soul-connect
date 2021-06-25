@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
 
@@ -8,9 +8,12 @@ import firebase from "firebase";
 import SideBar from "../sidebar/SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../actions/login-action";
+import { GetUsers } from "../../api/login-api";
+import { updateUsers } from "../../actions/users-actions";
 
 export default function Nav() {
   const allUsers = useSelector((state) => state.allUsers);
+
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.loggedInUser);
   const navigate = useNavigate();
@@ -21,7 +24,6 @@ export default function Nav() {
   const searchUsers = (event) => {
     const userInput = event.target.value;
     if (userInput !== "") {
-      console.log({ loggedInUser });
       const otherUsers = allUsers.filter(
         (user) => user.id !== loggedInUser.userId
       );
@@ -54,14 +56,27 @@ export default function Nav() {
     firebase.auth().signOut();
     dispatch(logoutUser());
 
-    localStorage?.setItem(
-      "user",
-      JSON.stringify({ isUserLoggedIn: false, localUserName: "", userId: "" })
-    );
+    localStorage?.removeItem("user");
 
     navigate("/login");
   }
 
+  useEffect(() => {
+    const getUsers = async () => {
+      const users = await GetUsers();
+      console.log("cheking", users);
+      localStorage?.setItem(
+        "allUsers",
+        JSON.stringify({
+          users,
+        })
+      );
+
+      dispatch(updateUsers(users));
+    };
+    getUsers();
+  }, []);
+  console.log("Nav rendering");
   return (
     <div className="navbar">
       {showSide && <SideBar />}
@@ -95,7 +110,7 @@ export default function Nav() {
                   <Link
                     key={user.id}
                     className="search-user-link"
-                    to={`/userprofile/${user.id}`}
+                    to={`/userprofile/${user._id}`}
                   >
                     <li className="suggesterd-user">{user.name}</li>
                   </Link>

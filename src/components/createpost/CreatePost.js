@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import users from "../../data/users";
 import "./createPost.css";
-import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost } from "../../actions/posts-action";
+import { addPostFun, updatePosts } from "../../actions/posts-action";
+import { addPost } from "../../api/post-api";
 
 function CreatePost() {
   const loggedInUser = useSelector((state) => state.loggedInUser);
+  const allUsers = useSelector((state) => state.allUsers);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
@@ -25,10 +25,10 @@ function CreatePost() {
     }
   };
 
-  const createIdea = () => {
-    let user = users.find((user) => (user.userId = loggedInUser.userId));
+  const createIdea = async () => {
+    let user = allUsers.find((user) => (user.uid = loggedInUser.userId));
     let today = new Date();
-
+    console.log({ user });
     let date =
       today.getDate() +
       "/" +
@@ -37,8 +37,6 @@ function CreatePost() {
       today.getFullYear();
 
     let newIdea = {
-      id: uuidv4(),
-      hackathon: "May21",
       userId: user.id,
       title: title,
       description: description,
@@ -46,7 +44,9 @@ function CreatePost() {
       creationDate: date,
       votes: [],
     };
-    dispatch(addPost(newIdea));
+    const allPosts = await addPost(loggedInUser.token, newIdea);
+
+    dispatch(updatePosts(allPosts));
     setTags([]);
     setShowCreateIdea(false);
   };

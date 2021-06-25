@@ -1,7 +1,10 @@
-import users from "../data/users";
+const { users } = JSON.parse(localStorage?.getItem("allUsers"));
+const intialState = users ? users : [];
 
-export default function usersReducer(state = users, value) {
+export default function usersReducer(state = intialState, value) {
   switch (value.type) {
+    case "UPDATEUSERS":
+      return value.payload;
     case "UPDATEFOLLOWING":
       const searchedUserId = value.payload.searchedUserId;
       const loggedInUserId = value.payload.LoggedInUserId;
