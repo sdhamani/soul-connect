@@ -1,4 +1,5 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import usersReducer from "../src/reducers/users-reducer";
 import postsReducer from "./reducers/posts-reducer";
 import loginReducer from "./reducers/login-reducer";
@@ -10,4 +11,4 @@ const rootReducer = combineReducers({
   loggedInUser: loginReducer,
 });
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, applyMiddleware(thunk));
