@@ -1,13 +1,26 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./posts.css";
-import users from "../../data/users";
-import { addComment, likePost, sortBy } from "../../actions/posts-action";
+
+import {
+  addComment,
+  likePost,
+  sortBy,
+  updatePosts,
+} from "../../actions/posts-action";
 
 function Posts() {
   const loggedInUser = useSelector((state) => state.loggedInUser);
-  const posts = useSelector((state) => state.posts);
+  const allUsers = useSelector((state) => state.allUsers);
+  let posts = useSelector((state) => state.posts);
+
+  posts = posts.slice().sort(function (a, b) {
+    a = new Date(a.creationDate);
+    b = new Date(b.creationDate);
+
+    return b - a;
+  });
+
   const dispatch = useDispatch();
 
   const handleKeyPress = (e, id) => {
@@ -23,6 +36,10 @@ function Posts() {
       e.target.value = "";
     }
   };
+
+  useEffect(() => {
+    dispatch(updatePosts());
+  }, []);
 
   return (
     <div className="all-posts">
@@ -41,8 +58,18 @@ function Posts() {
         </select>
       </div>
       <div>
-        {posts.map((idea) => {
-          let user = users.find((user) => user.id === idea.userId);
+        {posts?.map((idea) => {
+          let user = allUsers.find((user) => user._id === idea.userId);
+
+          let date = new Date(idea.creationDate);
+
+          date =
+            date.getDate() +
+            "/" +
+            (date.getMonth() + 1) +
+            "/" +
+            date.getFullYear();
+
           return (
             <div key={idea.id} className="idea">
               <div className="idea-heading">
@@ -54,7 +81,7 @@ function Posts() {
                 ></img>
                 <div>
                   <div>{user?.name}</div>
-                  <div className="idea-date">{idea.creationDate}</div>
+                  <div className="idea-date">{date}</div>
                 </div>
               </div>
               <div className="idea-heading-title">{idea.title}</div>
