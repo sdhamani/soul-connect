@@ -4,12 +4,13 @@ import "./userposts.css";
 import Nav from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
 
-import users from "../../data/users";
+// import users from "../../data/users";
 
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost, editPost } from "../../actions/posts-action";
 
 function UserPosts() {
+  const allUsers = useSelector((state) => state.allUsers);
   const posts = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
@@ -18,6 +19,7 @@ function UserPosts() {
   const userPosts = posts.filter(
     (post) => post.userId === loggedInUser?.userId
   );
+  console.log({ posts }, { loggedInUser });
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -66,7 +68,7 @@ function UserPosts() {
           <div>
             {userPosts.length > 0 ? (
               userPosts.map((idea, index) => {
-                let user = users.find((user) => user.id === idea.userId);
+                let user = allUsers.find((user) => user._id === idea.userId);
                 return (
                   <div key={index} className="idea">
                     {showDeleteIdea && (
