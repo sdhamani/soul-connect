@@ -28,7 +28,7 @@ router
 
       let user = await User.findById(userId);
 
-      const { title, description, tags } = req.body;
+      const { title, description, tags, creationDate } = req.body;
 
       const newPost = new Post({
         userId: user._id,
@@ -38,6 +38,7 @@ router
         tags: tags,
         comments: [],
         votes: [],
+        creationDate: creationDate,
       });
       await newPost.save();
 

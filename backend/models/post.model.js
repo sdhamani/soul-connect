@@ -44,6 +44,7 @@ const PostSchema = new mongoose.Schema({
   ],
   creationDate: {
     type: String,
+    required: true,
   },
   votes: [
     {
