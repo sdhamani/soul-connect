@@ -1,3 +1,4 @@
+import getPosts from "../api/post-api";
 export const ADDPOST = "ADDPOST";
 export const LIKEPOST = "LIKEPOST";
 export const EDITPOST = "EDITPOST";
@@ -11,7 +12,26 @@ export function sortBy(sortByType) {
   };
 }
 
-export function addPost(newPost) {
+export const updatePosts = () => async (dispatch) => {
+  try {
+    const res = await getPosts();
+
+    dispatch({
+      type: "UPDATEPOSTS",
+      payload: res,
+    });
+    localStorage?.setItem(
+      "allPosts",
+      JSON.stringify({
+        res,
+      })
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export function addPostFun(newPost) {
   console.log("inside ADDPOST");
   return {
     type: ADDPOST,
