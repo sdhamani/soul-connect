@@ -44,7 +44,7 @@ function Login() {
           loggedIn: !!user,
           userName: user.displayName.toUpperCase(),
           userImage: user.providerData[0].photoURL,
-          userId: user.uid,
+          userId: user._id,
           token: loggedInUser.token,
         };
 
@@ -56,7 +56,7 @@ function Login() {
             isUserLoggedIn: true,
             localUserName: user.displayName.toUpperCase(),
             userImage: user.providerData[0].photoURL,
-            userId: user.uid,
+            userId: loggedInUser.userid,
             token: loggedInUser.token,
           })
         );
