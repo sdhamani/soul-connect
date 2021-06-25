@@ -8,6 +8,7 @@ import Nav from "../navbar/Navbar";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../actions/login-action";
+import LoginUser from "../../api/login-api";
 
 function Login() {
   const loggedInUser = useSelector((state) => state.loggedInUser);
@@ -28,16 +29,26 @@ function Login() {
   };
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log({ user });
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         const userObj = {
+          name: user.displayName.toUpperCase(),
+          email: user.email,
+          profileImage: user.providerData[0].photoURL,
+          uid: user.uid,
+        };
+
+        const loggedInUser = await LoginUser(userObj);
+
+        const finalUserObj = {
           loggedIn: !!user,
           userName: user.displayName.toUpperCase(),
           userImage: user.providerData[0].photoURL,
           userId: user.uid,
+          token: loggedInUser.token,
         };
-        dispatch(updateUser(userObj));
+
+        dispatch(updateUser(finalUserObj));
 
         localStorage?.setItem(
           "user",
@@ -46,6 +57,7 @@ function Login() {
             localUserName: user.displayName.toUpperCase(),
             userImage: user.providerData[0].photoURL,
             userId: user.uid,
+            token: loggedInUser.token,
           })
         );
         navigate("/");

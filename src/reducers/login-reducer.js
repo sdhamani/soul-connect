@@ -17,15 +17,15 @@ const getUserDetails = () => {
     firebase.app();
   }
   if (localStorage.getItem("user")) {
-    const { isUserLoggedIn, localUserName, userImage, userId } = JSON.parse(
-      localStorage?.getItem("user")
-    );
+    const { isUserLoggedIn, localUserName, userImage, userId, token } =
+      JSON.parse(localStorage?.getItem("user"));
 
     return {
       loggedIn: isUserLoggedIn,
       userName: localUserName,
       userImage: userImage,
       userId: userId,
+      token: token,
     };
   } else {
     return [];
