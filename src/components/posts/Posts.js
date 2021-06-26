@@ -4,15 +4,17 @@ import "./posts.css";
 
 import {
   addComment,
-  likePost,
+  likePostFun,
   sortBy,
   updatePosts,
 } from "../../actions/posts-action";
+import { commentPost, likePost } from "../../api/post-api";
 
 function Posts() {
   const loggedInUser = useSelector((state) => state.loggedInUser);
   const allUsers = useSelector((state) => state.allUsers);
   let posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
 
   posts = posts.slice().sort(function (a, b) {
     a = new Date(a.creationDate);
@@ -21,7 +23,10 @@ function Posts() {
     return b - a;
   });
 
-  const dispatch = useDispatch();
+  const updateLike = (ideaId, loggedInUserId) => {
+    dispatch(likePostFun(ideaId, loggedInUserId));
+    likePost(loggedInUser.token, ideaId);
+  };
 
   const handleKeyPress = (e, id) => {
     if (e.key === "Enter") {
@@ -33,13 +38,14 @@ function Posts() {
           loggedInUser.userImage
         )
       );
+      commentPost(loggedInUser.token, id, e.target.value);
       e.target.value = "";
     }
   };
 
   useEffect(() => {
     dispatch(updatePosts());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="all-posts">
@@ -51,7 +57,6 @@ function Posts() {
             {" "}
             select an option
           </option>
-
           <option value="VOTES">High Votes</option>
           <option value="EARLIEST_DATE">Creation Date: Earliest</option>
           <option value="OLDEST_DATE">Creation Date: Oldest</option>
@@ -71,7 +76,7 @@ function Posts() {
             date.getFullYear();
 
           return (
-            <div key={idea.id} className="idea">
+            <div key={idea._id} className="idea">
               <div className="idea-heading">
                 {" "}
                 <img
@@ -97,11 +102,11 @@ function Posts() {
               <div>
                 <i
                   className={
-                    idea.votes.includes(loggedInUser?.id)
+                    idea.votes.includes(loggedInUser?.userId)
                       ? "fa fa-arrow-up liked"
                       : "fa fa-arrow-up"
                   }
-                  onClick={(e) => dispatch(likePost(idea.id, loggedInUser.id))}
+                  onClick={(e) => updateLike(idea._id, loggedInUser.userId)}
                   aria-hidden="true"
                 ></i>
                 <span>{idea.votes.length}</span>
@@ -113,16 +118,16 @@ function Posts() {
                   alt="user"
                 />
                 <input
-                  onKeyPress={(e) => handleKeyPress(e, idea.id)}
+                  onKeyPress={(e) => handleKeyPress(e, idea._id)}
                   className="create-comment-input"
                   type="text"
                   placeholder="Add a comment..,"
                 />
               </div>
               <div className="comments">
-                {idea.comments?.map((comment) => {
+                {idea.comments?.map((comment, index) => {
                   return (
-                    <div key={comment.userName} className="comment">
+                    <div key={index} className="comment">
                       <img
                         className="createPost-userImage comment-user-image"
                         src={comment.userImage}
