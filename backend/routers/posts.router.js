@@ -109,7 +109,7 @@ router
   .delete(privateRoute, async (req, res) => {
     try {
       const postId = req.post._id;
-
+      console.log("in delte ", postId);
       await Post.remove({ _id: postId });
       const Allposts = await Post.find();
       res.status(200).json({

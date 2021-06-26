@@ -10,7 +10,6 @@ function CreatePost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
-
   const [showCreateIdea, setShowCreateIdea] = useState(false);
   const [tags, setTags] = useState([]);
 
@@ -37,6 +36,7 @@ function CreatePost() {
       creationDate: date,
       votes: [],
     };
+
     const allPosts = await addPost(loggedInUser.token, newIdea);
 
     dispatch(updatePosts(allPosts));
