@@ -1,16 +1,17 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import "./userposts.css";
-import Nav from "../navbar/Navbar";
+import { Nav } from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, editPost } from "../../actions/posts-action";
+import { deletePosts, editPosts } from "../../actions/posts-action";
 
 function UserPosts() {
   const allUsers = useSelector((state) => state.allUsers);
   const posts = useSelector((state) => state.posts);
   const dispatch = useDispatch();
+  const MemoizedNavbar = useCallback(Nav, []);
 
   const loggedInUser = useSelector((state) => state.loggedInUser);
 
@@ -20,10 +21,114 @@ function UserPosts() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [showEditIdea, setShowEditIdea] = useState(false);
-  const [showDeleteIdea, setShowDeleteIdea] = useState(false);
+  const [showEditIdea, setShowEditIdea] = useState(null);
+  const [showDeleteIdea, setShowDeleteIdea] = useState(null);
   const [userTags, setUserTags] = useState([]);
 
+  const showEditModel = () => {
+    return (
+      <div className="create-idea-popup">
+        <div className="create-idea-heading">
+          Edit Idea
+          <button
+            className="close-idea-popup-btn"
+            onClick={(e) => setShowEditIdea(null)}
+          >
+            x
+          </button>
+        </div>
+
+        <hr></hr>
+        <form className="createIdeaform">
+          <label>Title</label>
+          <input
+            defaultValue={showEditIdea.title}
+            className="idea-title"
+            type="text"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          ></input>
+          <label>Description</label>
+          <textarea
+            defaultValue={showEditIdea.description}
+            className="idea-desc"
+            row="25"
+            type="text"
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+        </form>
+        <div className="added-tags">
+          {userTags.map((tag) => (
+            <span key={tag} className="idea-tag">
+              {tag}
+              <button
+                className="remove-tag-btn"
+                onClick={(e) =>
+                  setUserTags(userTags.filter((prevTag) => prevTag !== tag))
+                }
+              >
+                x
+              </button>
+            </span>
+          ))}
+        </div>
+        <hr></hr>
+        <div className="ideas-add-tags">
+          <ul className="ideas-tag-list">
+            <li className="idea-tag" value="Tech" onClick={(e) => addTag(e)}>
+              Tech
+            </li>
+            <li className="idea-tag" onClick={(e) => addTag(e)}>
+              Feature
+            </li>
+            <li className="idea-tag" onClick={(e) => addTag(e)}>
+              Innovation
+            </li>
+          </ul>
+        </div>
+        <button
+          disabled={title === "" && description === ""}
+          className={
+            title === "" && description === ""
+              ? "create-idea-btn disabled"
+              : "create-idea-btn"
+          }
+          onClick={(e) => editIdea(showEditIdea._id)}
+        >
+          Edit
+        </button>
+      </div>
+    );
+  };
+
+  const showDeleteModel = () => {
+    return (
+      <div className="delete-idea-popup">
+        <div className="delete-idea-heading">
+          Are you sure you want to delete this idea ?
+        </div>
+        <div>
+          {" "}
+          <button
+            className="delete-idea-button"
+            onClick={(e) => {
+              dispatch(deletePosts(loggedInUser.token, showDeleteIdea._id));
+              setShowDeleteIdea(null);
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="delete-idea-button"
+            onClick={(e) => setShowDeleteIdea(null)}
+          >
+            No
+          </button>
+        </div>
+      </div>
+    );
+  };
   const addTag = (e) => {
     let liTag = e.target.innerText;
     if (userTags.includes(liTag)) {
@@ -34,7 +139,7 @@ function UserPosts() {
     }
   };
 
-  const editIdea = (id) => {
+  const editIdea = (postId) => {
     let today = new Date();
 
     let date =
@@ -45,20 +150,21 @@ function UserPosts() {
       today.getFullYear();
 
     let newPost = {
-      id: id,
       title: title,
       description: description,
       tags: userTags,
       editedDate: date,
     };
-    dispatch(editPost(newPost));
 
-    setShowEditIdea(false);
+    dispatch(editPosts(loggedInUser.token, newPost, postId));
+
+    setShowEditIdea(null);
   };
 
   return (
     <div className="userposts-div">
-      <Nav />
+      {/* <Nav /> */}
+      <MemoizedNavbar />
       <div className="userposts-content">
         <SideBar />
         <div className="userposts-posts">
@@ -66,114 +172,11 @@ function UserPosts() {
             {userPosts.length > 0 ? (
               userPosts.map((idea, index) => {
                 let user = allUsers.find((user) => user._id === idea.userId);
+
                 return (
                   <div key={index} className="idea">
-                    {showDeleteIdea && (
-                      <div className="delete-idea-popup">
-                        <div className="delete-idea-heading">
-                          Are you sure you want to delete this idea ?
-                        </div>
-                        <div>
-                          {" "}
-                          <button
-                            className="delete-idea-button"
-                            onClick={(e) => {
-                              dispatch(deletePost(idea.id));
-                              setShowDeleteIdea(false);
-                            }}
-                          >
-                            Yes
-                          </button>
-                          <button
-                            className="delete-idea-button"
-                            onClick={(e) => setShowDeleteIdea(false)}
-                          >
-                            No
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                    {showEditIdea && (
-                      <div className="create-idea-popup">
-                        <div className="create-idea-heading">
-                          Edit Idea
-                          <button
-                            className="close-idea-popup-btn"
-                            onClick={(e) => setShowEditIdea(false)}
-                          >
-                            x
-                          </button>
-                        </div>
-                        <hr></hr>
-                        <form className="createIdeaform">
-                          <label>Title</label>
-                          <input
-                            defaultValue={idea.title}
-                            className="idea-title"
-                            type="text"
-                            onChange={(e) => {
-                              setTitle(e.target.value);
-                            }}
-                          ></input>
-                          <label>Description</label>
-                          <textarea
-                            defaultValue={idea.description}
-                            className="idea-desc"
-                            row="25"
-                            type="text"
-                            onChange={(e) => setDescription(e.target.value)}
-                          ></textarea>
-                        </form>
-                        <div className="added-tags">
-                          {userTags.map((tag) => (
-                            <span key={tag} className="idea-tag">
-                              {tag}
-                              <button
-                                className="remove-tag-btn"
-                                onClick={(e) =>
-                                  setUserTags(
-                                    userTags.filter(
-                                      (prevTag) => prevTag !== tag
-                                    )
-                                  )
-                                }
-                              >
-                                x
-                              </button>
-                            </span>
-                          ))}
-                        </div>
-                        <hr></hr>
-                        <div className="ideas-add-tags">
-                          <ul className="ideas-tag-list">
-                            <li
-                              className="idea-tag"
-                              value="Tech"
-                              onClick={(e) => addTag(e)}
-                            >
-                              Tech
-                            </li>
-                            <li className="idea-tag" onClick={(e) => addTag(e)}>
-                              Feature
-                            </li>
-                            <li className="idea-tag" onClick={(e) => addTag(e)}>
-                              Innovation
-                            </li>
-                          </ul>
-                        </div>
-                        <button
-                          disabled={title === "" && description === ""}
-                          className={
-                            title === "" && description === ""
-                              ? "create-idea-btn disabled"
-                              : "create-idea-btn"
-                          }
-                          onClick={(e) => editIdea(idea.id)}
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    )}
+                    {showDeleteIdea !== null && showDeleteModel()}
+                    {showEditIdea !== null && showEditModel()}
                     <div className="idea-heading">
                       {" "}
                       <img
@@ -203,13 +206,13 @@ function UserPosts() {
                           setUserTags(idea.tags);
                           setDescription(idea.description);
                           setTitle(idea.title);
-                          setShowEditIdea(true);
+                          setShowEditIdea(idea);
                         }}
                       >
                         Edit
                       </button>
                       <button
-                        onClick={(e) => setShowDeleteIdea(true)}
+                        onClick={(e) => setShowDeleteIdea(idea)}
                         className="idea-manage-btn"
                       >
                         Delete
