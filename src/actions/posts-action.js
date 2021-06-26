@@ -1,12 +1,11 @@
-import getPosts from "../api/post-api";
+import getPosts, { deletePost, editPost } from "../api/post-api";
 export const ADDPOST = "ADDPOST";
 export const LIKEPOST = "LIKEPOST";
-export const EDITPOST = "EDITPOST";
-export const DELETEPOST = "DELETEPOST";
+
 export const ADDCOMMENT = "ADDCOMMENT";
+export const UPDATEPOSTS = "UPDATEPOSTS";
 
 export function sortBy(sortByType) {
-  console.log("inside sortBy action creator", sortByType);
   return {
     type: sortByType,
   };
@@ -17,7 +16,46 @@ export const updatePosts = () => async (dispatch) => {
     const res = await getPosts();
 
     dispatch({
-      type: "UPDATEPOSTS",
+      type: UPDATEPOSTS,
+      payload: res,
+    });
+    localStorage?.setItem(
+      "allPosts",
+      JSON.stringify({
+        res,
+      })
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const editPosts = (token, newPost, postId) => async (dispatch) => {
+  try {
+    const res = await editPost(token, newPost, postId);
+ 
+    dispatch({
+      type: UPDATEPOSTS,
+      payload: res,
+    });
+    localStorage?.setItem(
+      "allPosts",
+      JSON.stringify({
+        res,
+      })
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deletePosts = (token, postId) => async (dispatch) => {
+  try {
+
+    const res = await deletePost(token, postId);
+  
+    dispatch({
+      type: UPDATEPOSTS,
       payload: res,
     });
     localStorage?.setItem(
@@ -32,39 +70,20 @@ export const updatePosts = () => async (dispatch) => {
 };
 
 export function addPostFun(newPost) {
-  console.log("inside ADDPOST");
   return {
     type: ADDPOST,
     payload: newPost,
   };
 }
 
-export function likePost(postId, userId) {
-  console.log("inside likepost", postId, userId);
+export function likePostFun(postId, userId) {
   return {
     type: LIKEPOST,
     payload: { id: postId, userId: userId },
   };
 }
 
-export function editPost(newPost) {
-  console.log("inside update following");
-  return {
-    type: EDITPOST,
-    payload: newPost,
-  };
-}
-
-export function deletePost(postId) {
-  console.log("inside delete following");
-  return {
-    type: DELETEPOST,
-    payload: postId,
-  };
-}
-
 export function addComment(commentText, id, userName, userImage) {
-  console.log("inside ADDCOMMENT following");
   return {
     type: ADDCOMMENT,
     payload: {
