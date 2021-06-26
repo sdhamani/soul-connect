@@ -3,15 +3,14 @@ import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { useEffect } from "react";
 import "./login.css";
-import Nav from "../navbar/Navbar";
+import { Nav } from "../navbar/Navbar";
 
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../actions/login-action";
 import LoginUser from "../../api/login-api";
 
 function Login() {
-  const loggedInUser = useSelector((state) => state.loggedInUser);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -65,7 +64,7 @@ function Login() {
         navigate("/login");
       }
     });
-  }, [loggedInUser]);
+  }, [dispatch, navigate]);
 
   var firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,

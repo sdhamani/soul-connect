@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../navbar/Navbar";
+import { Nav } from "../navbar/Navbar";
 import "./userprofile.css";
 import { useParams } from "react-router";
 import { updateFollowing } from "../../actions/users-actions";
@@ -11,15 +11,15 @@ function UserProfile() {
   const posts = useSelector((state) => state.posts);
 
   const allUsers = useSelector((state) => state.allUsers);
-  console.log({ allUsers });
+
   const dispatch = useDispatch();
   const { userId } = JSON.parse(localStorage?.getItem("user"));
 
-  const LoggedInUser = allUsers.find((user) => user.uid == userId);
+  const LoggedInUser = allUsers.find((user) => user.uid === userId);
 
-  const searchedUser = allUsers.find((user) => user._id == searcheduserId);
+  const searchedUser = allUsers.find((user) => user._id === searcheduserId);
 
-  const userIdeas = posts.filter((idea) => idea.userId == searchedUser?.id);
+  const userIdeas = posts.filter((idea) => idea.userId === searchedUser?.id);
 
   return (
     <div className="userposts-div">

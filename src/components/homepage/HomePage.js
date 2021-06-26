@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../navbar/Navbar";
+import { Nav } from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
 import CreatePost from "../createpost/CreatePost";
 import "./homepage.css";

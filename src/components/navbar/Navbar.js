@@ -1,17 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
-
 import firebase from "firebase";
-
 import SideBar from "../sidebar/SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../actions/login-action";
 import { GetUsers } from "../../api/login-api";
 import { updateUsers } from "../../actions/users-actions";
 
-export default function Nav() {
+export const Nav = React.memo(function Navbar() {
   const allUsers = useSelector((state) => state.allUsers);
 
   const dispatch = useDispatch();
@@ -27,7 +25,7 @@ export default function Nav() {
       const otherUsers = allUsers.filter(
         (user) => user.id !== loggedInUser.userId
       );
-      console.log({ otherUsers });
+
       const filteredUsers = otherUsers.filter((user) => {
         return user.name.toLowerCase().startsWith(userInput.toLowerCase());
       });
@@ -75,8 +73,8 @@ export default function Nav() {
       dispatch(updateUsers(users));
     };
     getUsers();
-  }, []);
-  console.log("Nav rendering");
+  }, [dispatch]);
+
   return (
     <div className="navbar">
       {showSide && <SideBar />}
@@ -130,4 +128,4 @@ export default function Nav() {
       </nav>
     </div>
   );
-}
+});
