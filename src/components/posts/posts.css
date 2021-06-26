@@ -110,7 +110,7 @@
   background-color: var(--primary-color);
   border: 1px solid var(--post-text-color);
   outline: none;
-
+  color: var(--post-text-color);
   padding: 0.6rem 1rem;
   border-radius: 3rem;
   width: 85%;
