@@ -66,7 +66,9 @@ export async function deletePost(token, postId) {
         "auth-token": token,
       },
     };
-    const postObj = await axios.delete(url, null, config);
+    console.log("tr", url, config, postId);
+    const postObj = await axios.delete(url, config);
+    console.log("ss", { postObj });
 
     if (postObj.data.success) {
       return postObj.data.posts;
@@ -74,7 +76,7 @@ export async function deletePost(token, postId) {
       return postObj.data.message;
     }
   } catch (error) {
-    console.log("error while deleting post", error);
+    console.log("error while deleting post", error.message);
   }
 }
 
@@ -87,13 +89,7 @@ export async function likePost(token, postId) {
         "auth-token": token,
       },
     };
-    const postObj = await axios.post(url, null, config);
-
-    if (postObj.data.success) {
-      return postObj.data.posts;
-    } else {
-      return postObj.data.message;
-    }
+    await axios.post(url, null, config);
   } catch (error) {
     console.log("error while trying to like post", error);
   }
@@ -113,7 +109,7 @@ export async function commentPost(token, postId, description) {
       description,
     };
     const postObj = await axios.post(url, body, config);
-
+    console.log({ postObj });
     if (postObj.data.success) {
       return postObj.data.posts;
     } else {
