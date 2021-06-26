@@ -11,7 +11,6 @@ export default function postsReducer(state = intialState, value) {
         let bVotesLength = b.votes.length;
         return bVotesLength - aVotesLength;
       });
-
     case "EARLIEST_DATE":
       return state.slice().sort(function (a, b) {
         a = new Date(a.creationDate);
@@ -31,9 +30,9 @@ export default function postsReducer(state = intialState, value) {
     case "LIKEPOST":
       const userId = value.payload.userId;
       const ideaId = value.payload.id;
-      const currentState = state;
-      return currentState.map((idea) => {
-        if (idea.id === ideaId) {
+
+      return state.map((idea) => {
+        if (idea._id === ideaId) {
           return idea.votes.includes(userId)
             ? {
                 ...idea,
@@ -46,25 +45,8 @@ export default function postsReducer(state = intialState, value) {
         }
         return idea;
       });
-    case "EDITPOST":
-      const editedArray = state.map((idea) => {
-        if (idea.id === value.payload.id) {
-          return {
-            ...idea,
-            title: value.payload.title,
-            description: value.payload.description,
-            tags: value.payload.tags,
-            creationDate: value.payload.editedDate,
-          };
-        }
-        return idea;
-      });
 
-      return editedArray;
-    case "DELETEPOST":
-      return state.filter((idea) => idea.id !== value.payload);
     case "ADDCOMMENT":
-      console.log("value", value);
       const newComment = {
         description: value.payload.commentText,
         userName: value.payload.userName,
@@ -72,7 +54,7 @@ export default function postsReducer(state = intialState, value) {
       };
 
       return state.map((idea) => {
-        if (idea.id === value.payload.ideaId) {
+        if (idea._id === value.payload.ideaId) {
           const newIdea = {
             ...idea,
             comments: [...idea.comments, newComment],
