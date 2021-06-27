@@ -11,11 +11,9 @@ import { updateUsers } from "../../actions/users-actions";
 
 export const Nav = React.memo(function Navbar() {
   const allUsers = useSelector((state) => state.allUsers);
-
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.loggedInUser);
   const navigate = useNavigate();
-
   const [showSide, setshowSide] = useState(false);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
 
