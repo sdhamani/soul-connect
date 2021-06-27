@@ -4,7 +4,7 @@ const intialState = users ? users : [];
 export default function usersReducer(state = intialState, value) {
   switch (value.type) {
     case "UPDATEUSERS":
-      return value.payload;
+      return value.payload ? value.payload : [];
     case "UPDATEFOLLOWING":
       const searchedUserId = value.payload.searchedUserId;
       const loggedInUserId = value.payload.LoggedInUserId;
