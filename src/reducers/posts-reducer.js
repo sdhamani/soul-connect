@@ -1,5 +1,4 @@
-const { res } = JSON.parse(localStorage?.getItem("allPosts"));
-const intialState = res ? res : [];
+const intialState = [];
 
 export default function postsReducer(state = intialState, value) {
   switch (value.type) {
