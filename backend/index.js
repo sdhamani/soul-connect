@@ -11,6 +11,11 @@ initializeDBConnection();
 
 const app = express();
 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log("server started");
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -24,9 +29,4 @@ app.get("/", (req, res) => {
 
 app.use("*", function (req, res) {
   res.status(400).json("Page Not Found");
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log("server started");
 });
