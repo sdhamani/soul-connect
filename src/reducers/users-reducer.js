@@ -1,5 +1,6 @@
-const { users } = JSON.parse(localStorage?.getItem("allUsers"));
-const intialState = users ? users : [];
+// const { users } = JSON.parse(localStorage?.getItem("allUsers"));
+// const intialState = users ? users : [];
+const intialState = [];
 
 export default function usersReducer(state = intialState, value) {
   switch (value.type) {

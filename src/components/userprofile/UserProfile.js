@@ -15,7 +15,7 @@ function UserProfile() {
   const dispatch = useDispatch();
   const { userId } = JSON.parse(localStorage?.getItem("user"));
 
-  const LoggedInUser = allUsers.find((user) => user.uid === userId);
+  const LoggedInUser = allUsers.find((user) => user._id === userId);
 
   const searchedUser = allUsers.find((user) => user._id === searcheduserId);
 
@@ -31,9 +31,9 @@ function UserProfile() {
               <img
                 className="sidebar-userImage"
                 alt="userImage"
-                src={searchedUser.profileImage}
+                src={searchedUser?.profileImage}
               ></img>
-              <span className="sidebar-userName">{searchedUser.name}</span>
+              <span className="sidebar-userName">{searchedUser?.name}</span>
             </div>
 
             <div className="sidebar-myposts">
@@ -43,7 +43,7 @@ function UserProfile() {
                   dispatch(updateFollowing(searchedUser.id, LoggedInUser.id))
                 }
               >
-                {LoggedInUser.following.includes(searcheduserId)
+                {LoggedInUser?.following.includes(searcheduserId)
                   ? "Following"
                   : "Follow"}
               </button>
