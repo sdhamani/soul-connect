@@ -30,7 +30,7 @@ export async function GetUsers() {
   }
 }
 
-export async function updateFollowing(token) {
+export async function updateFollowing(token, searchedUserId) {
   const url = process.env.REACT_APP_BACKEND_API + "/user/follow";
   try {
     const config = {
@@ -41,7 +41,7 @@ export async function updateFollowing(token) {
     };
 
     const body = {
-      searchedUserId: "60d3960bb88ed30b7068665d",
+      searchedUserId: searchedUserId,
     };
 
     const allUsers = await axios.post(url, body, config);
