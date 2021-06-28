@@ -12,8 +12,8 @@ export default function HomePage() {
       <Nav />
 
       <span className="homepage-deadline">
-        The Ideas for June hackathon will be accepted till date 20th June 2021.
-        Please make sure you submit your ideas before the deadline.
+        We have a live session on coming Sunday at 11am where we are planning to
+        share positive thoughts.
       </span>
 
       <div className="homepage-content">
