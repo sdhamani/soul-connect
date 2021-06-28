@@ -28,6 +28,7 @@
     background-color: var(--background-color);
   }
   .homepage-news {
+    display: none;
     top: 14%;
     font-size: 55%;
     position: fixed;

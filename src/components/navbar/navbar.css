@@ -135,13 +135,25 @@
     display: initial;
   }
   .nav-heading {
-    font-size: 1.1rem;
+    font-size: small;
+    margin: 1rem 0rem;
   }
   .nav-userName {
-    font-size: 0.8rem;
+    font-size: x-small;
+    margin: 0.1rem 0rem;
+    text-align: center;
+  }
+  .search-user-input {
+    width: 90%;
+    margin: 0rem 0rem;
+  }
+  .logout-div {
+    display: flex;
+    flex-direction: column;
   }
   .logout-btn {
-    font-size: 0.7rem;
+    font-size: small;
+    margin: 0.1rem 0rem;
   }
   .navbar .sidebar {
     display: flex;
@@ -153,5 +165,9 @@
   }
   .navbar .sidebar .sidebar-userName {
     font-size: small;
+  }
+  .suggesterd-users {
+    width: 42%;
+    top: 7.5%;
   }
 }

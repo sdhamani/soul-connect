@@ -52,8 +52,8 @@
 @media screen and (max-width: 767px) {
   .homepage-posts {
     margin-top: 15rem;
-    width: 60%;
-    margin: 1rem 1rem;
+    width: auto;
+    margin: 1rem 0.5rem;
   }
   .homepage-content {
     margin-top: 5rem;

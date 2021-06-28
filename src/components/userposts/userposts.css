@@ -71,8 +71,39 @@
 }
 
 @media screen and (max-width: 767px) {
+  .userposts-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+  }
+  .userposts-div .sidebar {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 1rem 1rem;
+  }
+  .userposts-div .sidebar .sidebar-userName {
+    text-align: center;
+    margin: 0rem 0rem;
+  }
+  .userposts-div .sidebar .sidebar-heading {
+    padding: 0.3rem 0.2rem;
+
+    text-align: center;
+  }
+
+  .userposts-div .sidebar .sidebar-myposts {
+    margin: 0.5rem 1rem;
+    width: auto;
+  }
+  .navigation .hamburger {
+    display: none;
+  }
+
   .userposts-posts {
-    width: 75%;
+    width: 100%;
+    margin: 1rem 1rem;
   }
   .delete-idea-popup {
     width: 45%;
