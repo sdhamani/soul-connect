@@ -163,7 +163,6 @@ function UserPosts() {
 
   return (
     <div className="userposts-div">
-      {/* <Nav /> */}
       <MemoizedNavbar />
       <div className="userposts-content">
         <SideBar />
