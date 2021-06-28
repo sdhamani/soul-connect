@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Nav } from "../navbar/Navbar";
 import "./userprofile.css";
 import { useParams } from "react-router";
-import { updateFollowing } from "../../actions/users-actions";
+import { updateFollowingAction } from "../../actions/users-actions";
 import { useDispatch, useSelector } from "react-redux";
+import { updatePosts } from "../../actions/posts-action";
 
 function UserProfile() {
   const { searcheduserId } = useParams();
@@ -12,6 +13,8 @@ function UserProfile() {
 
   const allUsers = useSelector((state) => state.allUsers);
 
+  const LoggedInUserStore = useSelector((state) => state.loggedInUser);
+
   const dispatch = useDispatch();
   const { userId } = JSON.parse(localStorage?.getItem("user"));
 
@@ -19,7 +22,13 @@ function UserProfile() {
 
   const searchedUser = allUsers.find((user) => user._id === searcheduserId);
 
-  const userIdeas = posts.filter((idea) => idea.userId === searchedUser?.id);
+  const userIdeas = posts.filter((idea) => idea.userId === searchedUser?._id);
+
+  useEffect(() => {
+    dispatch(updatePosts());
+  }, [dispatch]);
+
+  console.log({ LoggedInUser });
 
   return (
     <div className="userposts-div">
@@ -40,7 +49,13 @@ function UserProfile() {
               <button
                 className="follow-btn"
                 onClick={(e) =>
-                  dispatch(updateFollowing(searchedUser.id, LoggedInUser.id))
+                  dispatch(
+                    updateFollowingAction(
+                      LoggedInUserStore.token,
+                      searchedUser._id,
+                      LoggedInUser._id
+                    )
+                  )
                 }
               >
                 {LoggedInUser?.following.includes(searcheduserId)
@@ -54,10 +69,10 @@ function UserProfile() {
           <div>
             {userIdeas.length > 0 ? (
               userIdeas.map((idea) => {
-                let user = allUsers.find((user) => user.id === idea.userId);
+                let user = allUsers.find((user) => user._id === idea.userId);
 
                 return (
-                  <div key={idea.id} className="idea">
+                  <div key={idea._id} className="idea">
                     <div className="idea-heading">
                       {" "}
                       <img
