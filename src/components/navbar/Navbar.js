@@ -15,13 +15,13 @@ export const Nav = React.memo(function Navbar() {
   const loggedInUser = useSelector((state) => state.loggedInUser);
   const navigate = useNavigate();
   const [showSide, setshowSide] = useState(false);
-  const [suggestedUsers, setSuggestedUsers] = useState([]);
+  const [suggestedUsers, setSuggestedUsers] = useState(null);
 
   const searchUsers = (event) => {
     const userInput = event.target.value;
     if (userInput !== "") {
       const otherUsers = allUsers.filter(
-        (user) => user.id !== loggedInUser.userId
+        (user) => user._id !== loggedInUser.userId
       );
 
       const filteredUsers = otherUsers.filter((user) => {
@@ -29,7 +29,7 @@ export const Nav = React.memo(function Navbar() {
       });
       setSuggestedUsers(filteredUsers);
     } else {
-      setSuggestedUsers([]);
+      setSuggestedUsers(null);
     }
   };
 
@@ -53,6 +53,7 @@ export const Nav = React.memo(function Navbar() {
     dispatch(logoutUser());
 
     localStorage?.removeItem("user");
+    localStorage?.removeItem("allPosts");
 
     navigate("/login");
   }
@@ -60,13 +61,6 @@ export const Nav = React.memo(function Navbar() {
   useEffect(() => {
     const getUsers = async () => {
       const users = await GetUsers();
-
-      localStorage?.setItem(
-        "allUsers",
-        JSON.stringify({
-          users,
-        })
-      );
 
       dispatch(updateUsers(users));
     };
@@ -94,25 +88,31 @@ export const Nav = React.memo(function Navbar() {
         {loggedInUser.loggedIn === true ? (
           <form className="search-user">
             <input
+              autoComplete="off"
               onChange={(e) => searchUsers(e)}
               className="search-user-input"
               type="search"
               placeholder="Search user"
               aria-label="Search"
             />
-            <div className="suggesterd-users">
-              <ul className="suggesterd-users-list">
-                {suggestedUsers.map((user) => (
-                  <Link
-                    key={user.id}
-                    className="search-user-link"
-                    to={`/userprofile/${user._id}`}
-                  >
-                    <li className="suggesterd-user">{user.name}</li>
-                  </Link>
-                ))}
-              </ul>
-            </div>
+            {suggestedUsers !== null && (
+              <div className="suggesterd-users">
+                <ul
+                  className="suggesterd-users-list"
+                  onClick={() => setSuggestedUsers(null)}
+                >
+                  {suggestedUsers?.map((user) => (
+                    <Link
+                      key={user.id}
+                      className="search-user-link"
+                      to={`/userprofile/${user._id}`}
+                    >
+                      <li className="suggesterd-user">{user.name}</li>
+                    </Link>
+                  ))}
+                </ul>
+              </div>
+            )}
           </form>
         ) : null}
         {loggedInUser.loggedIn === true ? (
