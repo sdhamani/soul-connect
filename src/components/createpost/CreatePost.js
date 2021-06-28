@@ -24,12 +24,12 @@ function CreatePost() {
   };
 
   const createIdea = async () => {
-    let user = allUsers.find((user) => (user.uid = loggedInUser.userId));
+    let user = allUsers.find((user) => (user._id = loggedInUser.userId));
 
     let date = new Date();
 
     let newIdea = {
-      userId: user.id,
+      userId: user._id,
       title: title,
       description: description,
       tags: tags,

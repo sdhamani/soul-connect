@@ -1,5 +1,3 @@
-// const { users } = JSON.parse(localStorage?.getItem("allUsers"));
-// const intialState = users ? users : [];
 const intialState = [];
 
 export default function usersReducer(state = intialState, value) {
@@ -10,7 +8,7 @@ export default function usersReducer(state = intialState, value) {
       const searchedUserId = value.payload.searchedUserId;
       const loggedInUserId = value.payload.LoggedInUserId;
       return state.map((user) => {
-        if (user.id === searchedUserId) {
+        if (user._id === searchedUserId) {
           const isInFollowers = user.followers.includes(loggedInUserId);
           if (isInFollowers) {
             return {
@@ -25,7 +23,7 @@ export default function usersReducer(state = intialState, value) {
               followers: [...user.followers, loggedInUserId],
             };
           }
-        } else if (user.id === loggedInUserId) {
+        } else if (user._id === loggedInUserId) {
           const isInFollowing = user.following.includes(searchedUserId);
           if (isInFollowing) {
             return {
