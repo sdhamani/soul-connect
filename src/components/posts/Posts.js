@@ -82,7 +82,7 @@ function Posts() {
                 <img
                   className="createPost-userImage"
                   alt="userImage"
-                  src={loggedInUser.userImage}
+                  src={idea.userImage}
                 ></img>
                 <div>
                   <div>{user?.name}</div>
