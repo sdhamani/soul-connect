@@ -15,7 +15,13 @@
 
 .login-center-div {
   width: 20%;
-  height: 50%;
+  height: 85%;
+}
+
+.login-content {
+  text-align: center;
+  margin-top: 5rem;
+  color: var(--login-background);
 }
 
 .login-card {
@@ -31,6 +37,16 @@
 .login-card-heading {
   width: 100%;
   text-align: center;
+}
+.login-content-heading {
+  font-size: 4rem;
+  font-weight: 600;
+}
+
+.login-content-text {
+  margin-top: 1rem;
+  font-size: larger;
+  font-weight: 500;
 }
 
 .login-account {

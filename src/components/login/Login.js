@@ -20,7 +20,6 @@ function Login() {
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
       signInSuccessWithAuthResult: () => false,
@@ -30,6 +29,7 @@ function Login() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
+        console.log(user);
         const userObj = {
           name: user.displayName.toUpperCase(),
           email: user.email,
@@ -38,12 +38,12 @@ function Login() {
         };
 
         const loggedInUser = await LoginUser(userObj);
-
+        console.log({ loggedInUser });
         const finalUserObj = {
           loggedIn: !!user,
           userName: user.displayName.toUpperCase(),
           userImage: user.providerData[0].photoURL,
-          userId: user._id,
+          userId: loggedInUser.userid,
           token: loggedInUser.token,
         };
 
@@ -86,6 +86,13 @@ function Login() {
     <div>
       {" "}
       <Nav />
+      <div className="login-content">
+        <h2 className="login-content-heading">Soul Connect</h2>
+        <p className="login-content-text">
+          An online platform to spread positivity using thoughts and ideas of
+          what helps you stay positive.
+        </p>
+      </div>
       <div className="login-div">
         <div className="login-center-div">
           <div className="login-card">
