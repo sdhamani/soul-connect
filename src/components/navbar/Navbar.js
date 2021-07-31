@@ -69,7 +69,33 @@ export const Nav = React.memo(function Navbar() {
 
   return (
     <div className="navbar">
-      {showSide && <SideBar />}
+      <div className="mobile-sidebar">
+        {showSide && (
+          <div className="sidebar">
+            <div>
+              <div className="sidebar-heading">
+                <img
+                  className="sidebar-userImage"
+                  alt="userImage"
+                  src={loggedInUser.userImage}
+                ></img>
+                <span className="sidebar-userName">
+                  {loggedInUser.userName}
+                </span>
+              </div>
+
+              <div
+                className="sidebar-myposts"
+                onClick={() => setshowSide(false)}
+              >
+                <Link className="sidebar-my-posts-link" to="/usersposts">
+                  My Posts
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
       <nav className="navigation">
         <div
           onClick={(e) => setshowSide(!showSide)}

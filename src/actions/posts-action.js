@@ -33,7 +33,7 @@ export const updatePosts = () => async (dispatch) => {
 export const editPosts = (token, newPost, postId) => async (dispatch) => {
   try {
     const res = await editPost(token, newPost, postId);
- 
+
     dispatch({
       type: UPDATEPOSTS,
       payload: res,
@@ -51,9 +51,8 @@ export const editPosts = (token, newPost, postId) => async (dispatch) => {
 
 export const deletePosts = (token, postId) => async (dispatch) => {
   try {
-
     const res = await deletePost(token, postId);
-  
+
     dispatch({
       type: UPDATEPOSTS,
       payload: res,
