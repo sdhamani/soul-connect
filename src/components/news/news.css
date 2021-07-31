@@ -1,11 +1,14 @@
 .homepage-news {
+  position: fixed;
+  right: 7%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-wrap: break-word;
   width: 25%;
   border: 1px solid #ffcb9a;
-  height: auto;
+  height: 85vh;
   margin-top: 1rem;
   border-radius: 1rem;
   padding: 0.5rem 0rem;
