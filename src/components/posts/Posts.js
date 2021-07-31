@@ -16,13 +16,6 @@ function Posts() {
   let posts = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
-  posts = posts.slice().sort(function (a, b) {
-    a = new Date(a.creationDate);
-    b = new Date(b.creationDate);
-
-    return b - a;
-  });
-
   const updateLike = (ideaId, loggedInUserId) => {
     dispatch(likePostFun(ideaId, loggedInUserId));
     likePost(loggedInUser.token, ideaId);
