@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Nav } from "../navbar/Navbar";
 import "./userprofile.css";
 import { useParams } from "react-router";
@@ -8,6 +8,8 @@ import { updatePosts } from "../../actions/posts-action";
 
 function UserProfile() {
   const { searcheduserId } = useParams();
+
+  const [followingLoader, setFollowingLoader] = useState(false);
 
   const posts = useSelector((state) => state.posts);
 
@@ -28,8 +30,9 @@ function UserProfile() {
     dispatch(updatePosts());
   }, [dispatch]);
 
-  console.log({ LoggedInUser });
-
+  useEffect(() => {
+    setFollowingLoader(false);
+  }, [LoggedInUser]);
   return (
     <div className="userposts-div">
       <Nav />
@@ -48,19 +51,24 @@ function UserProfile() {
             <div className="sidebar-myposts">
               <button
                 className="follow-btn"
-                onClick={(e) =>
+                onClick={(e) => {
+                  setFollowingLoader(true);
                   dispatch(
                     updateFollowingAction(
                       LoggedInUserStore.token,
                       searchedUser._id,
                       LoggedInUser._id
                     )
-                  )
-                }
+                  );
+                }}
               >
-                {LoggedInUser?.following.includes(searcheduserId)
-                  ? "Following"
-                  : "Follow"}
+                {followingLoader ? (
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+                ) : LoggedInUser?.following.includes(searcheduserId) ? (
+                  "Following"
+                ) : (
+                  "Follow"
+                )}
               </button>
             </div>
           </div>
