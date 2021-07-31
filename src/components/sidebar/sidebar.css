@@ -5,6 +5,8 @@
 }
 
 .sidebar {
+  position: fixed;
+  left: 5rem;
   background-color: var(--side-bar-back);
   color: var(--sidebar-text);
   width: 18%;
@@ -52,6 +54,7 @@
   text-decoration: none;
 }
 .sidebar-my-posts-link {
+  cursor: pointer;
   text-decoration: none;
   color: var(--sidebar-text);
 }
