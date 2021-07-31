@@ -5,24 +5,29 @@ export default function postsReducer(state = intialState, value) {
     case "UPDATEPOSTS":
       return value.payload;
     case "VOTES":
-      return state.slice().sort(function (a, b) {
+      let sortedState = state.slice().sort(function (a, b) {
         let aVotesLength = a.votes.length;
         let bVotesLength = b.votes.length;
         return bVotesLength - aVotesLength;
       });
+      return sortedState;
     case "EARLIEST_DATE":
-      return state.slice().sort(function (a, b) {
+      state.sort(function (a, b) {
         a = new Date(a.creationDate);
         b = new Date(b.creationDate);
-
+        console.log(a, b, b - a);
         return b - a;
       });
+
+      return [...state];
     case "OLDEST_DATE":
-      return state.slice().sort(function (a, b) {
+      state.sort(function (a, b) {
         a = new Date(a.creationDate);
         b = new Date(b.creationDate);
         return a - b;
       });
+
+      return [...state];
 
     case "ADDPOST":
       return [...state, value.payload];
