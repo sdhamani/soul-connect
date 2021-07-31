@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 import "./userposts.css";
 import { Nav } from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deletePosts, editPosts } from "../../actions/posts-action";
+import {
+  updatePosts,
+  deletePosts,
+  editPosts,
+} from "../../actions/posts-action";
 
 function UserPosts() {
   const allUsers = useSelector((state) => state.allUsers);
@@ -18,6 +22,10 @@ function UserPosts() {
   const userPosts = posts.filter(
     (post) => post.userId === loggedInUser?.userId
   );
+
+  useEffect(() => {
+    dispatch(updatePosts());
+  }, [dispatch]);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
