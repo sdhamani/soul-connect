@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
-import SideBar from "../sidebar/SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../actions/login-action";
 import { GetUsers } from "../../api/login-api";
