@@ -84,11 +84,12 @@ export const Nav = React.memo(function Navbar() {
                 </span>
               </div>
 
-              <div
-                className="sidebar-myposts"
-                onClick={() => setshowSide(false)}
-              >
-                <Link className="sidebar-my-posts-link" to="/usersposts">
+              <div className="sidebar-myposts">
+                <Link
+                  onClick={() => setshowSide(false)}
+                  className="sidebar-my-posts-link"
+                  to="/usersposts"
+                >
                   My Posts
                 </Link>
               </div>
